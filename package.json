@@ -1,0 +1,32 @@
+{
+  "name": "my-plan-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.ts",
+  "scripts": {
+    "start": " tsc && node server.js",
+    "start:dev": "tsc && NODE_ENV=development nodemon server.js",
+    "start:prod": "tsc && NODE_ENV=production nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosueBacca77/my-plan-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JosueBacca77/my-plan-api/issues"
+  },
+  "homepage": "https://github.com/JosueBacca77/my-plan-api#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
+}
