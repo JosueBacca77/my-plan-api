@@ -8,16 +8,15 @@ process.on("uncaughtException", (error) => {
 });
 dotenv.config({ path: `${__dirname}/.env` });
 const app = express();
-const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DATABASE_PASSWORD);
-// mongoose
-//   .connect(DB, {
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useFindAndModify: false,
-//   })
-//   .then(() => {
-//     console.log("DB connection successful!");
-//   });
+const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DATABASE_USER_PASSWORD);
+mongoose
+    .connect(DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => {
+    console.log("DB connection successful!");
+});
 const port = Number(process.env.PORT);
 const server = app.listen(port, () => {
     console.log(`App running on port ${port}`);

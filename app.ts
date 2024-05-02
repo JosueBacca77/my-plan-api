@@ -1,19 +1,23 @@
-const express = require("express");
-const morgan = require("morgan");
-const toursRouter = require("./routs/tourRutes");
-const AppError = require("./utils/appError");
-const { errors } = require("celebrate");
-const errorHandler = require("./controllers/errorController");
-const rateLimit = require("express-rate-limit");
-const helmet = require("helmet");
-const mongoSanitize = require("express-mongo-sanitize");
-const xss = require("xss-clean");
-
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const compression = require("compression");
+import express, { NextFunction, Request, Response } from "express";
+import morgan from "morgan";
+import muscularGroupsRouter from "./routes/muscularGroup.routes";
+import AppError from "./utils/appError";
+import { errors } from "celebrate";
+import errorHandler from "./controllers/errorController";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
+import xss from "xss-clean";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import compression from "compression";
 
 const app = express();
+
+app.use((req, res, next) => {
+  console.log(req.headers);
+  next();
+});
 
 app.use(cors());
 app.options("*", cors());
@@ -52,9 +56,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.enable("trust proxy");
 
-app.use("/api/v1/tours", toursRouter);
+app.use("/api/v1/muscular-groups", muscularGroupsRouter);
 
-app.all("*", (req, res, next) => {
+app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(new AppError(`The route ${req.url} doesn't exist`, 404));
 });
 

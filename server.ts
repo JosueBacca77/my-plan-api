@@ -13,18 +13,17 @@ const app = express();
 
 const DB: string = process.env.DATABASE!.replace(
   "<PASSWORD>",
-  process.env.DATABASE_PASSWORD!
+  process.env.DATABASE_USER_PASSWORD!
 );
 
-// mongoose
-//   .connect(DB, {
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useFindAndModify: false,
-//   })
-//   .then(() => {
-//     console.log("DB connection successful!");
-//   });
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("DB connection successful!");
+  });
 
 const port: number = Number(process.env.PORT);
 
