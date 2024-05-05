@@ -10,7 +10,7 @@ const deleteDocument = (Model: Model<ModelDocument>): RequestHandler =>
   createAsync(async (req, res, next) => {
     const id = req.params.id;
 
-    const document = await Model.findOneAndDelete({ id });
+    const document = await Model.findOneAndDelete({ _id: id });
 
     if (!document) {
       return next(new AppError("Document not found", 404));
@@ -123,7 +123,7 @@ const getAllDocuments = (Model: Model<ModelDocument>): RequestHandler =>
     //    });
   });
 
-export {
+export const handlerFactory = {
   deleteDocument,
   replaceDocument,
   createDocument,

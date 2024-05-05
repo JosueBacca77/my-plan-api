@@ -12,10 +12,10 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import compression from "compression";
 
-const app = express();
+export const app = express();
 
-app.use((req, res, next) => {
-  console.log(req.headers);
+app.route("/").get((req, res, next) => {
+  console.log("headers", req.headers);
   next();
 });
 

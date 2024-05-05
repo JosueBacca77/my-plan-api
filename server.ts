@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+import app from "./app";
 
 process.on("uncaughtException", (error: Error) => {
   console.log("UNCAUGHT EXCEPTION");
@@ -9,7 +10,6 @@ process.on("uncaughtException", (error: Error) => {
 });
 
 dotenv.config({ path: `${__dirname}/.env` });
-const app = express();
 
 const DB: string = process.env.DATABASE!.replace(
   "<PASSWORD>",
