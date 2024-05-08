@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllDocuments = exports.getDocument = exports.updateDocument = exports.createDocument = exports.replaceDocument = exports.deleteDocument = void 0;
+exports.handlerFactory = void 0;
 // import APIFeatures from "../utils/apiFeatures";
 const appError_1 = __importDefault(require("../utils/appError"));
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
 const deleteDocument = (Model) => (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    const document = yield Model.findOneAndDelete({ id });
+    const document = yield Model.findOneAndDelete({ _id: id });
     if (!document) {
         return next(new appError_1.default("Document not found", 404));
     }
@@ -26,7 +26,6 @@ const deleteDocument = (Model) => (0, catchAsync_1.default)((req, res, next) => 
         status: "success",
     });
 }));
-exports.deleteDocument = deleteDocument;
 const replaceDocument = (Model) => (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const document = yield Model.findOneAndReplace({
@@ -42,7 +41,6 @@ const replaceDocument = (Model) => (0, catchAsync_1.default)((req, res, next) =>
         data: document,
     });
 }));
-exports.replaceDocument = replaceDocument;
 const createDocument = (Model) => (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const newDocument = new Model(body);
@@ -52,7 +50,6 @@ const createDocument = (Model) => (0, catchAsync_1.default)((req, res, next) => 
         data: createdDocument,
     });
 }));
-exports.createDocument = createDocument;
 const updateDocument = (Model) => (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const document = yield Model.findByIdAndUpdate(id, req.body, {
@@ -68,7 +65,6 @@ const updateDocument = (Model) => (0, catchAsync_1.default)((req, res, next) => 
         data: document,
     });
 }));
-exports.updateDocument = updateDocument;
 const getDocument = (Model, populateOptions) => (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const documentId = req.params.id;
     let query = Model.findById(documentId);
@@ -84,7 +80,6 @@ const getDocument = (Model, populateOptions) => (0, catchAsync_1.default)((req, 
         data: document,
     });
 }));
-exports.getDocument = getDocument;
 const getAllDocuments = (Model) => (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     //     let filter = {};
     //     if (req.params.tourId) {
@@ -102,4 +97,11 @@ const getAllDocuments = (Model) => (0, catchAsync_1.default)((req, res, next) =>
     //       },
     //    });
 }));
-exports.getAllDocuments = getAllDocuments;
+exports.handlerFactory = {
+    deleteDocument,
+    replaceDocument,
+    createDocument,
+    updateDocument,
+    getDocument,
+    getAllDocuments,
+};

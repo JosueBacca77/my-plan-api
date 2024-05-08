@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteExercise = exports.patchExercise = exports.postExercise = exports.getExercise = void 0;
+const handlerFactory_1 = require("../common/handlerFactory");
+const Exercise = require("../models/Exercise.model");
+// const getAllExercises = handlerFactory.getAllDocuments(Exercise);
+exports.getExercise = handlerFactory_1.handlerFactory.getDocument(Exercise);
+exports.postExercise = handlerFactory_1.handlerFactory.createDocument(Exercise);
+exports.patchExercise = handlerFactory_1.handlerFactory.updateDocument(Exercise);
+exports.deleteExercise = handlerFactory_1.handlerFactory.deleteDocument(Exercise);
