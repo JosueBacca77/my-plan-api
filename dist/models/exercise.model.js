@@ -7,7 +7,10 @@ const exerciseSchema = new mongoose_1.Schema({
         required: [true, "Name is required"],
     },
     description: String,
-    files: [String],
+    files: {
+        type: [String],
+        default: null,
+    },
     muscularGroup: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "MuscularGroup",
