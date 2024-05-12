@@ -1,41 +1,41 @@
 import { Schema, model, Document } from "mongoose";
 
 interface ClientModel extends Document {
-  name: string;
-  lastName: string;
   birthDate: Date;
   height: number;
   weight: number;
   conditions?: string[];
   user: {
     id: string;
-    userName: string;
+    name: string;
+    lastName: string;
     email: string;
+    photo: string;
   };
   plans: string[];
 }
 
 const clientSchema = new Schema<ClientModel>({
-  name: {
-    type: String,
-    required: [true, "Name is required"],
-  },
-  lastName: {
-    type: String,
-    required: [true, "Last Name is required"],
-  },
   user: {
     id: {
       type: String,
       required: [true, "User Id is required"],
     },
-    userName: {
+    name: {
       type: String,
-      required: [true, "User name is required"],
+      required: [true, "Name is required"],
+    },
+    lastName: {
+      type: String,
+      required: [true, "Last Name is required"],
     },
     email: {
       type: String,
       required: [true, "User email is required"],
+    },
+    photo: {
+      type: String,
+      default: null,
     },
   },
   birthDate: {

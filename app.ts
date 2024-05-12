@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import compression from "compression";
 import exercisesRoutes from "./routes/exercise..routes";
+import usersRoutes from "./routes/users..routes";
 
 export const app = express();
 
@@ -54,6 +55,7 @@ app.enable("trust proxy");
 
 app.use("/api/v1/muscular-groups", muscularGroupsRouter);
 app.use("/api/v1/exercises", exercisesRoutes);
+app.use("/api/v1/users", usersRoutes);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(new AppError(`The route ${req.url} doesn't exist`, 404));
