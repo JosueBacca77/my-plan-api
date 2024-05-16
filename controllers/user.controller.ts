@@ -2,26 +2,21 @@ import { handlerFactory } from "../common/handlerFactory";
 import { Request, Response } from "express";
 
 import Exercise from "../models/exercise.model";
-import User from "../models/user.model.";
+import User, { Rol, UserModel } from "../models/user.model.";
 import createAsync from "../utils/catchAsync";
 import jwt from "jsonwebtoken";
+import Trainer from "../models/trainer.model";
+import { ResponseBody } from "../utils/http";
 
 // const getAllExercises = handlerFactory.getAllDocuments(Exercise);
 
-interface User {
-  name: string;
-  email: string;
-  password: string;
-}
-
-interface RequestBody extends User {
-  // Agrega aquí cualquier otro campo necesario en el cuerpo de la solicitud
-}
-
-interface ResponseBody {
-  status: string;
-  statusCode: number;
-  message: string;
+interface RequestSignUpBody extends UserModel {
+  passwordConfirm: string;
+  birthDate: Date;
+  hiredDate?: Date;
+  weight?: string;
+  height?: string;
+  conditions?: string[];
 }
 
 const signToken = (id: string): string => {
@@ -65,8 +60,33 @@ const createSendToken = (user, statusCode, req, res) => {
 
 export const signup = createAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const { name, lastName, email, password, passwordConfirm, photo } =
-      req.body;
+    const body: RequestSignUpBody = req.body;
+
+    const {
+      name,
+      lastName,
+      birthDate,
+      hiredDate,
+      email,
+      password,
+      passwordConfirm,
+      photo,
+      weight,
+      height,
+      conditions,
+    } = body;
+
+    const foundUser = await User.findOne({ email });
+
+    if (foundUser) {
+      const response: ResponseBody = {
+        status: "error",
+        statusCode: 409,
+        message: `User with email ${email} already exists`,
+        data: foundUser,
+      };
+      res.send(response.status).json(response);
+    }
 
     const newUser = await User.create({
       name,
@@ -77,17 +97,50 @@ export const signup = createAsync(
       passwordConfirm,
     });
 
+    let rolUser = null;
+
+    // if (rol === TRAINER) {
+    //   //send email wth token
+    //   rolUser = await Trainer.create({
+    //     user: {
+    //       name: newUser.name,
+    //       lastName: newUser.lastName,
+    //       email: newUser.email,
+    //       photo: newUser.photo,
+    //     },
+    //     hiredDate,
+    //     birthDate,
+    //   });
+    // }
+
+    // if (rol === CLIENT) {
+    //   //send code trought SMS
+    //   rolUser = await Trainer.create({
+    //     user: {
+    //       name: newUser.name,
+    //       lastName: newUser.lastName,
+    //       email: newUser.email,
+    //       photo: newUser.photo,
+    //     },
+    //     hiredDate,
+    //     birthDate,
+    //     weight,
+    //     height,
+    //     conditions,
+    //   });
+    // }
     // const url = `${req.protocol}://${req.get("host")}/me`;
 
     // await new Email(newUser, url).sendWelcome();
 
     //expiresIn could be a integer (miliseconds) or in this format 90d 10h 5m 3s
-    createSendToken(newUser, 201, req, res);
+    // createSendToken(newUser, 201, req, res);
 
     const response: ResponseBody = {
       status: "success",
       statusCode: 200,
       message: "User registered successfully",
+      data: rolUser,
     };
 
     res.status(response.statusCode).json(response);

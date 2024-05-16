@@ -10,3 +10,5 @@ export interface AppErrorInterface extends Error, MongoValidationError {
   isOperational: boolean;
   message: string;
 }
+
+export const userRoles = ["admin", "trainer", "client"];
