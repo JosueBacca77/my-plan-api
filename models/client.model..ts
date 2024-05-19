@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 
-interface ClientModel extends Document {
+export interface ClientModel extends Document {
   birthDate: Date;
   height: number;
   weight: number;
@@ -12,7 +12,7 @@ interface ClientModel extends Document {
     email: string;
     photo: string;
   };
-  plans: string[];
+  plans?: string[];
 }
 
 const clientSchema = new Schema<ClientModel>({

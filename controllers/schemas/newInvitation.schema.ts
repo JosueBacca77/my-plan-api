@@ -7,7 +7,7 @@ export const newInvitationSchema = Joi.object({
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),
   phone: Joi.string(),
-  rol: Joi.string()
+  role: Joi.string()
     .valid(...userRoles)
     .required(),
   //   passwordChangedAt: Joi.date(), //remove it when logic for changing password is implemented

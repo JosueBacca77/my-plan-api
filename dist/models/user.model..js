@@ -19,6 +19,10 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         required: [true, "Email is required"],
     },
+    role: {
+        type: String,
+        required: [true, "Role is required"],
+    },
     photo: {
         type: String,
         default: null,

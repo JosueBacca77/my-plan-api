@@ -1,7 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 
 interface TrainerModel extends Document {
-  hiredDate: Date;
+  hiredDate?: Date;
   birthDate: Date;
   user: {
     id: string;

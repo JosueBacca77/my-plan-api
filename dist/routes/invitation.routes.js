@@ -11,5 +11,7 @@ const invitationsRoutes = express_1.default.Router();
 invitationsRoutes
     .route("/")
     // .get(getAllexercises)
+    .get()
     .post((0, celebrate_1.celebrate)({ body: newInvitation_schema_1.newInvitationSchema }), invitation_controler_1.createInvitation);
+invitationsRoutes.route("/:id").get(invitation_controler_1.getInvitation);
 exports.default = invitationsRoutes;

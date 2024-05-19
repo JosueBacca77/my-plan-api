@@ -2,22 +2,36 @@ import { handlerFactory } from "../common/handlerFactory";
 import { Request, Response } from "express";
 
 import Exercise from "../models/exercise.model";
-import User, { Rol, UserModel } from "../models/user.model.";
 import createAsync from "../utils/catchAsync";
 import jwt from "jsonwebtoken";
 import Trainer from "../models/trainer.model";
 import { ResponseBody } from "../utils/http";
+import { getUserFactory } from "../factories/users/handler";
+import { Invitation } from "../models/invitation.model";
+import crypto from "crypto";
+import { INewRoleUser } from "../factories/users/UserFactory";
 
-// const getAllExercises = handlerFactory.getAllDocuments(Exercise);
-
-interface RequestSignUpBody extends UserModel {
+interface RequestUserBody {
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
   passwordConfirm: string;
+  token: string;
+}
+
+export interface RequestSignUpClientBody extends RequestUserBody {
   birthDate: Date;
-  hiredDate?: Date;
   weight?: string;
   height?: string;
   conditions?: string[];
 }
+
+export interface RequestSignUpTrainerBody extends RequestUserBody {
+  birthDate: Date;
+}
+
+// const getAllExercises = handlerFactory.getAllDocuments(Exercise);
 
 const signToken = (id: string): string => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -59,88 +73,85 @@ const createSendToken = (user, statusCode, req, res) => {
 };
 
 export const signup = createAsync(
-  async (req: Request, res: Response): Promise<void> => {
-    const body: RequestSignUpBody = req.body;
+  async (req: Request, res: Response): Promise<any> => {
+    const body: RequestSignUpTrainerBody | RequestSignUpClientBody = req.body;
 
-    const {
-      name,
-      lastName,
-      birthDate,
-      hiredDate,
-      email,
-      password,
-      passwordConfirm,
-      photo,
-      weight,
-      height,
-      conditions,
-    } = body;
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(body.token)
+      .digest("hex");
 
-    const foundUser = await User.findOne({ email });
+    console.log("body.token", body.token);
+    console.log("hashedToken", hashedToken);
 
-    if (foundUser) {
+    const invitation = await Invitation.findOne({ token: hashedToken });
+
+    if (!invitation) {
       const response: ResponseBody = {
         status: "error",
-        statusCode: 409,
-        message: `User with email ${email} already exists`,
-        data: foundUser,
+        statusCode: 401,
+        message: `User hasn't been invited`,
+        data: null,
       };
-      res.send(response.status).json(response);
+      return res.status(response.statusCode).json(response);
     }
 
-    const newUser = await User.create({
-      name,
-      lastName,
-      email,
-      photo,
-      password,
-      passwordConfirm,
-    });
+    if (invitation.email != body.email) {
+      const response: ResponseBody = {
+        status: "error",
+        statusCode: 400,
+        message: `Email and token don't match`,
+        data: null,
+      };
+      return res.status(response.statusCode).json(response);
+    }
 
-    let rolUser = null;
+    //Check invitation is not expired
+    if (invitation.tokenExpires < new Date()) {
+      const response: ResponseBody = {
+        status: "error",
+        statusCode: 401,
+        message: `Invitation for ${body.email} has expired`,
+        data: {
+          foundInvitation: invitation,
+        },
+      };
+      return res.status(response.statusCode).json(response);
+    }
 
-    // if (rol === TRAINER) {
-    //   //send email wth token
-    //   rolUser = await Trainer.create({
-    //     user: {
-    //       name: newUser.name,
-    //       lastName: newUser.lastName,
-    //       email: newUser.email,
-    //       photo: newUser.photo,
-    //     },
-    //     hiredDate,
-    //     birthDate,
-    //   });
+    console.log("VA A CREAR USER");
+    const factory = getUserFactory(invitation.role);
+
+    const newUser: INewRoleUser = await factory.createUser(body);
+
+    console.log("newUser", newUser);
+
+    // const foundUser = await User.findOne({ email });
+
+    // if (foundUser) {
+    //   const response: ResponseBody = {
+    //     status: "error",
+    //     statusCode: 409,
+    //     message: `User with email ${email} already exists`,
+    //     data: foundUser,
+    //   };
+    //   res.send(response.status).json(response);
     // }
 
-    // if (rol === CLIENT) {
-    //   //send code trought SMS
-    //   rolUser = await Trainer.create({
-    //     user: {
-    //       name: newUser.name,
-    //       lastName: newUser.lastName,
-    //       email: newUser.email,
-    //       photo: newUser.photo,
-    //     },
-    //     hiredDate,
-    //     birthDate,
-    //     weight,
-    //     height,
-    //     conditions,
-    //   });
-    // }
-    // const url = `${req.protocol}://${req.get("host")}/me`;
-
-    // await new Email(newUser, url).sendWelcome();
-
-    //expiresIn could be a integer (miliseconds) or in this format 90d 10h 5m 3s
-    // createSendToken(newUser, 201, req, res);
+    // const newUser = await User.create({
+    //   name,
+    //   lastName,
+    //   email,
+    //   photo,
+    //   password,
+    //   passwordConfirm,
+    // });
 
     const response: ResponseBody = {
       status: "success",
       statusCode: 200,
       message: "User registered successfully",
-      data: rolUser,
+      data: newUser,
     };
 
     res.status(response.statusCode).json(response);
