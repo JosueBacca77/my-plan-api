@@ -6,10 +6,15 @@ import createAsync from "../utils/catchAsync";
 import jwt from "jsonwebtoken";
 import Trainer from "../models/trainer.model";
 import { ResponseBody } from "../utils/http";
-import { getUserFactory } from "../factories/users/handler";
+import {
+  getUserFactory,
+  getValidationSchema,
+} from "../factories/users/handler";
 import { Invitation } from "../models/invitation.model";
 import crypto from "crypto";
 import { INewRoleUser } from "../factories/users/UserFactory";
+import { newClientSchema, newTrainerSchema } from "./schemas/newUser.schema";
+import { CLIENT, Role, TRAINER } from "../models/user.model.";
 
 interface RequestUserBody {
   name: string;
@@ -18,6 +23,7 @@ interface RequestUserBody {
   password: string;
   passwordConfirm: string;
   token: string;
+  role: Role;
 }
 
 export interface RequestSignUpClientBody extends RequestUserBody {
@@ -81,9 +87,6 @@ export const signup = createAsync(
       .update(body.token)
       .digest("hex");
 
-    console.log("body.token", body.token);
-    console.log("hashedToken", hashedToken);
-
     const invitation = await Invitation.findOne({ token: hashedToken });
 
     if (!invitation) {
@@ -96,11 +99,31 @@ export const signup = createAsync(
       return res.status(response.statusCode).json(response);
     }
 
+    if (invitation.isUsed) {
+      const response: ResponseBody = {
+        status: "error",
+        statusCode: 401,
+        message: `Invitation has already been used and user created successfully`,
+        data: null,
+      };
+      return res.status(response.statusCode).json(response);
+    }
+
     if (invitation.email != body.email) {
       const response: ResponseBody = {
         status: "error",
         statusCode: 400,
         message: `Email and token don't match`,
+        data: null,
+      };
+      return res.status(response.statusCode).json(response);
+    }
+
+    if (body.role != invitation.role) {
+      const response: ResponseBody = {
+        status: "error",
+        statusCode: 400,
+        message: `Role sent doesn't match the invitation role`,
         data: null,
       };
       return res.status(response.statusCode).json(response);
@@ -119,33 +142,43 @@ export const signup = createAsync(
       return res.status(response.statusCode).json(response);
     }
 
-    console.log("VA A CREAR USER");
+    let validationSchema = getValidationSchema(body.role);
+
+    if (!validationSchema) {
+      return res.status(400).json({
+        status: "error",
+        statusCode: 400,
+        message: "Invalid role",
+        data: null,
+      });
+    }
+
+    try {
+      const { error } = validationSchema.validate(body);
+      if (error) {
+        return res.status(400).json({
+          status: "error",
+          statusCode: 400,
+          message: "Validation error",
+          data: error.details,
+        });
+      }
+    } catch (validationError) {
+      return res.status(400).json({
+        status: "error",
+        statusCode: 400,
+        message: "Validation failed",
+        data: validationError,
+      });
+    }
+
     const factory = getUserFactory(invitation.role);
 
     const newUser: INewRoleUser = await factory.createUser(body);
 
-    console.log("newUser", newUser);
-
-    // const foundUser = await User.findOne({ email });
-
-    // if (foundUser) {
-    //   const response: ResponseBody = {
-    //     status: "error",
-    //     statusCode: 409,
-    //     message: `User with email ${email} already exists`,
-    //     data: foundUser,
-    //   };
-    //   res.send(response.status).json(response);
-    // }
-
-    // const newUser = await User.create({
-    //   name,
-    //   lastName,
-    //   email,
-    //   photo,
-    //   password,
-    //   passwordConfirm,
-    // });
+    //Set invitaation as used
+    invitation.isUsed = true;
+    await invitation.save();
 
     const response: ResponseBody = {
       status: "success",

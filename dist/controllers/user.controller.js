@@ -65,7 +65,7 @@ exports.signup = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 
         const response = {
             status: "error",
             statusCode: 401,
-            message: `Token doesn't have an invitation associated`,
+            message: `User hasn't been invited`,
             data: null,
         };
         return res.status(response.statusCode).json(response);
@@ -91,32 +91,23 @@ exports.signup = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 
         };
         return res.status(response.statusCode).json(response);
     }
-    const factory = (0, handler_1.getUserFactory)(invitation.role);
-    const newUser = factory.createUser(body);
-    console.log("newUser", newUser);
-    // const foundUser = await User.findOne({ email });
-    // if (foundUser) {
-    //   const response: ResponseBody = {
-    //     status: "error",
-    //     statusCode: 409,
-    //     message: `User with email ${email} already exists`,
-    //     data: foundUser,
-    //   };
-    //   res.send(response.status).json(response);
-    // }
-    // const newUser = await User.create({
-    //   name,
-    //   lastName,
-    //   email,
-    //   photo,
-    //   password,
-    //   passwordConfirm,
-    // });
+    let newUser = null;
+    try {
+        console.log("VA A CREAR USER");
+        const factory = (0, handler_1.getUserFactory)(invitation.role);
+        newUser = yield factory.createUser(body);
+    }
+    catch (error) {
+        console.log("ERROR", error);
+    }
+    // const factory = getUserFactory(invitation.role);
+    //  newUser: INewRoleUser = await factory.createUser(body);
+    console.log("newUser creado", newUser);
     const response = {
         status: "success",
         statusCode: 200,
         message: "User registered successfully",
-        data: null,
+        data: newUser,
     };
     res.status(response.statusCode).json(response);
 }));

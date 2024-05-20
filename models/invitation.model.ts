@@ -10,6 +10,7 @@ interface InvitationModel extends Document {
   lastName: string;
   createdAt: Date;
   tokenExpires: Date;
+  isUsed: boolean;
 }
 
 const invitationSchema = new Schema<InvitationModel>({
@@ -31,6 +32,10 @@ const invitationSchema = new Schema<InvitationModel>({
   tokenExpires: {
     type: Date,
     default: Date.now() + 30 * 60 * 1000,
+  },
+  isUsed: {
+    type: Boolean,
+    default: false,
   },
 });
 

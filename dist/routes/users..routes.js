@@ -11,5 +11,5 @@ const usersRoutes = express_1.default.Router();
 usersRoutes
     .route("/sign-up")
     // .get(getAllexercises)
-    .post((0, celebrate_1.celebrate)({ body: newUser_schema_1.newUserSchema }), user_controller_1.signup);
+    .post((0, celebrate_1.celebrate)({ body: newUser_schema_1.newRoleUserSchema }), user_controller_1.signup);
 exports.default = usersRoutes;

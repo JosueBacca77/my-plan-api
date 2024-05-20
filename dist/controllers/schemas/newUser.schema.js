@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newTrainerSchema = exports.newClientSchema = exports.newUserSchema = void 0;
+exports.newRoleUserSchema = exports.newTrainerSchema = exports.newClientSchema = exports.newUserSchema = void 0;
 const { Joi } = require("celebrate");
 const { passwordRegex } = require("../../utils/regex");
 exports.newUserSchema = Joi.object({
@@ -24,3 +24,5 @@ exports.newClientSchema = exports.newUserSchema.concat(Joi.object({
 exports.newTrainerSchema = exports.newUserSchema.concat(Joi.object({
     birthDate: Joi.date().required(),
 }));
+// Define el esquema combinado que acepta ambos
+exports.newRoleUserSchema = Joi.alternatives().try(exports.newClientSchema, exports.newTrainerSchema);

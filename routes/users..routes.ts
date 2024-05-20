@@ -8,6 +8,6 @@ const usersRoutes = express.Router();
 usersRoutes
   .route("/sign-up")
   // .get(getAllexercises)
-  .post(celebrate({ body: newRoleUserSchema }), signup);
+  .post(signup);
 
 export default usersRoutes;

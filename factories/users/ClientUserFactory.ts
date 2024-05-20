@@ -1,7 +1,7 @@
 import { CLIENT } from "../../models/user.model.";
 import { UserFactory } from "./User";
 import { INewRoleUser, IUserFactory } from "./UserFactory";
-import Client, { ClientModel } from "../../models/client.model.";
+import Client from "../../models/client.model.";
 
 // Concrete factory for creating client users
 export class ClientUserFactory implements IUserFactory {

@@ -23,8 +23,6 @@ exports.createInvitation = (0, catchAsync_1.default)((req, res) => __awaiter(voi
     const { email, name, lastName, role, phone } = body;
     const foundInvitation = yield invitation_model_1.Invitation.findOne({ email });
     const expiredDate = foundInvitation === null || foundInvitation === void 0 ? void 0 : foundInvitation.tokenExpires;
-    console.log("expiredDate", expiredDate);
-    console.log("now", new Date(Date.now()));
     if (foundInvitation && expiredDate > new Date(Date.now())) {
         //Thee is a invtation for this user that hasn't expired
         const response = {
@@ -38,6 +36,7 @@ exports.createInvitation = (0, catchAsync_1.default)((req, res) => __awaiter(voi
         return res.status(response.statusCode).json(response);
     }
     const tokens = (0, tokens_1.generateToken)();
+    console.log("original token", tokens.token);
     const newInvitation = yield invitation_model_1.Invitation.create({
         name,
         lastName,
@@ -46,7 +45,6 @@ exports.createInvitation = (0, catchAsync_1.default)((req, res) => __awaiter(voi
         role,
         token: tokens.hashedToken,
     });
-    console.log("sendToken", tokens.token);
     const response = {
         status: "success",
         statusCode: 200,

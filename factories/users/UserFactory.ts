@@ -1,5 +1,3 @@
-import ClientModel from "../../models/client.model.";
-import TrainerModel from "../../models/trainer.model";
 import { Document } from "mongoose";
 
 // ClientModel Interface

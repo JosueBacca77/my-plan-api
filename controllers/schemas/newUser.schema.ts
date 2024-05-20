@@ -10,6 +10,7 @@ export const newUserSchema = Joi.object({
   passwordConfirm: Joi.string().valid(Joi.ref("password")).required().messages({
     "any.only": "Passwords doesn't match",
   }),
+  role: Joi.string().required(),
 });
 
 // Define el esquema para el cliente extendiendo el esquema base
@@ -18,7 +19,7 @@ export const newClientSchema = newUserSchema.concat(
     birthDate: Joi.date().required(),
     height: Joi.number().required(),
     weight: Joi.number().required(),
-    conditions: Joi.string().optional(),
+    conditions: Joi.array().items(Joi.string()).optional(),
   })
 );
 
