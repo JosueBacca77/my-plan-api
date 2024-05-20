@@ -29,9 +29,3 @@ export const newTrainerSchema = newUserSchema.concat(
     birthDate: Joi.date().required(),
   })
 );
-
-// Define el esquema combinado que acepta ambos
-export const newRoleUserSchema = Joi.alternatives().try(
-  newClientSchema,
-  newTrainerSchema
-);

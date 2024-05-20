@@ -1,13 +1,8 @@
 import express from "express";
-import { celebrate } from "celebrate";
-import { newRoleUserSchema } from "../controllers/schemas/newUser.schema";
 import { signup } from "../controllers/user.controller";
 
 const usersRoutes = express.Router();
 
-usersRoutes
-  .route("/sign-up")
-  // .get(getAllexercises)
-  .post(signup);
+usersRoutes.route("/sign-up").post(signup);
 
 export default usersRoutes;
