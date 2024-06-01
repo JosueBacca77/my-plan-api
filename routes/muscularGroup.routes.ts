@@ -12,7 +12,6 @@ const muscularGroupsRoutes = express.Router();
 
 muscularGroupsRoutes
   .route("/")
-  // .get(getAllMuscularGroups)
   .post(celebrate({ body: newMuscularGroupSchema }), postMUscularGroup);
 
 muscularGroupsRoutes
