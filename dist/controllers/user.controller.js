@@ -58,9 +58,7 @@ exports.signup = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 
         .createHash("sha256")
         .update(body.token)
         .digest("hex");
-    console.log("body.token", body.token);
-    console.log("hashedToken", hashedToken);
-    const invitation = yield invitation_model_1.Invitation.findOne({ token: hashedToken });
+    const invitation = yield invitation_model_1.Invitation.findOne({ token: hashedToken }).lean();
     if (!invitation) {
         const response = {
             status: "error",
@@ -70,11 +68,11 @@ exports.signup = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 
         };
         return res.status(response.statusCode).json(response);
     }
-    if (invitation.email != body.email) {
+    if (invitation.isUsed) {
         const response = {
             status: "error",
-            statusCode: 400,
-            message: `Email and token don't match`,
+            statusCode: 401,
+            message: `Invitation has already been used and user created successfully`,
             data: null,
         };
         return res.status(response.statusCode).json(response);
@@ -84,25 +82,47 @@ exports.signup = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 
         const response = {
             status: "error",
             statusCode: 401,
-            message: `Invitation for ${body.email} has expired`,
+            message: `Invitation for ${invitation.email} has expired`,
             data: {
                 foundInvitation: invitation,
             },
         };
         return res.status(response.statusCode).json(response);
     }
-    let newUser = null;
+    let validationSchema = (0, handler_1.getValidationSchema)(invitation.role);
+    if (!validationSchema) {
+        return res.status(400).json({
+            status: "error",
+            statusCode: 400,
+            message: "Invalid role",
+            data: null,
+        });
+    }
+    const newUserData = Object.assign(Object.assign({}, body), { email: invitation.email, role: invitation.role });
     try {
-        console.log("VA A CREAR USER");
-        const factory = (0, handler_1.getUserFactory)(invitation.role);
-        newUser = yield factory.createUser(body);
+        const { error } = validationSchema.validate(newUserData);
+        if (error) {
+            return res.status(400).json({
+                status: "error",
+                statusCode: 400,
+                message: "Validation error",
+                data: error.details,
+            });
+        }
     }
-    catch (error) {
-        console.log("ERROR", error);
+    catch (validationError) {
+        return res.status(400).json({
+            status: "error",
+            statusCode: 400,
+            message: "Validation failed",
+            data: validationError,
+        });
     }
-    // const factory = getUserFactory(invitation.role);
-    //  newUser: INewRoleUser = await factory.createUser(body);
-    console.log("newUser creado", newUser);
+    const factory = (0, handler_1.getUserFactory)(invitation.role);
+    const newUser = yield factory.createUser(newUserData);
+    //Set invitaation as used
+    invitation.isUsed = true;
+    yield invitation.save();
     const response = {
         status: "success",
         statusCode: 200,

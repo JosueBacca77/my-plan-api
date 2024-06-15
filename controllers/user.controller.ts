@@ -4,26 +4,22 @@ import { Request, Response } from "express";
 import Exercise from "../models/exercise.model";
 import createAsync from "../utils/catchAsync";
 import jwt from "jsonwebtoken";
-import Trainer from "../models/trainer.model";
 import { ResponseBody } from "../utils/http";
 import {
+  RolUserFactory,
   getUserFactory,
   getValidationSchema,
 } from "../factories/users/handler";
 import { Invitation } from "../models/invitation.model";
 import crypto from "crypto";
 import { INewRoleUser } from "../factories/users/UserFactory";
-import { newClientSchema, newTrainerSchema } from "./schemas/newUser.schema";
-import { CLIENT, Role, TRAINER } from "../models/user.model.";
 
 interface RequestUserBody {
   name: string;
   lastName: string;
-  email: string;
   password: string;
   passwordConfirm: string;
   token: string;
-  role: Role;
 }
 
 export interface RequestSignUpClientBody extends RequestUserBody {
@@ -109,32 +105,12 @@ export const signup = createAsync(
       return res.status(response.statusCode).json(response);
     }
 
-    if (invitation.email != body.email) {
-      const response: ResponseBody = {
-        status: "error",
-        statusCode: 400,
-        message: `Email and token don't match`,
-        data: null,
-      };
-      return res.status(response.statusCode).json(response);
-    }
-
-    if (body.role != invitation.role) {
-      const response: ResponseBody = {
-        status: "error",
-        statusCode: 400,
-        message: `Role sent doesn't match the invitation role`,
-        data: null,
-      };
-      return res.status(response.statusCode).json(response);
-    }
-
     //Check invitation is not expired
     if (invitation.tokenExpires < new Date()) {
       const response: ResponseBody = {
         status: "error",
         statusCode: 401,
-        message: `Invitation for ${body.email} has expired`,
+        message: `Invitation for ${invitation.email} has expired`,
         data: {
           foundInvitation: invitation,
         },
@@ -142,7 +118,7 @@ export const signup = createAsync(
       return res.status(response.statusCode).json(response);
     }
 
-    let validationSchema = getValidationSchema(body.role);
+    let validationSchema = getValidationSchema(invitation.role);
 
     if (!validationSchema) {
       return res.status(400).json({
@@ -153,8 +129,14 @@ export const signup = createAsync(
       });
     }
 
+    const newUserData = {
+      ...body,
+      email: invitation.email,
+      role: invitation.role
+    };
+
     try {
-      const { error } = validationSchema.validate(body);
+      const { error } = validationSchema.validate(newUserData);
       if (error) {
         return res.status(400).json({
           status: "error",
@@ -172,9 +154,9 @@ export const signup = createAsync(
       });
     }
 
-    const factory = getUserFactory(invitation.role);
+    const factory: RolUserFactory = getUserFactory(invitation.role);
 
-    const newUser: INewRoleUser = await factory.createUser(body);
+    const newUser: INewRoleUser = await factory.createUser(newUserData);
 
     //Set invitaation as used
     invitation.isUsed = true;

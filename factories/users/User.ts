@@ -1,5 +1,4 @@
 import User from "../../models/user.model.";
-import bcrypt from "bcryptjs";
 
 // Define the structure of a User
 export interface IUser {

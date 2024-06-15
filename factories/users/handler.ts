@@ -2,11 +2,13 @@ import {
   newClientSchema,
   newTrainerSchema,
 } from "../../controllers/schemas/newUser.schema";
-import { ADMIN, CLIENT, Role, TRAINER } from "../../models/user.model.";
+import { CLIENT, Role, TRAINER } from "../../models/user.model.";
 import { ClientUserFactory } from "./ClientUserFactory";
 import { TrainerUserFactory } from "./TrainerUserFactory";
 
-export const getUserFactory = (role: Role) => {
+export type RolUserFactory = ClientUserFactory | TrainerUserFactory
+
+export const getUserFactory = (role: Role): RolUserFactory => {
   switch (role) {
     case CLIENT:
       return new ClientUserFactory();

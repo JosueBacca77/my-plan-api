@@ -1,8 +1,8 @@
 import express from "express";
 import { celebrate } from "celebrate";
 import {
-  createInvitation,
-  getInvitation,
+  createInvitationController,
+  getInvitationController,
 } from "../controllers/invitation.controler";
 import { newInvitationSchema } from "../controllers/schemas/newInvitation.schema";
 
@@ -12,7 +12,7 @@ invitationsRoutes
   .route("/")
   // .get(getAllexercises)
   .get()
-  .post(celebrate({ body: newInvitationSchema }), createInvitation);
+  .post(celebrate({ body: newInvitationSchema }), createInvitationController);
 
-invitationsRoutes.route("/:id").get(getInvitation);
+invitationsRoutes.route("/:id").get(getInvitationController);
 export default invitationsRoutes;

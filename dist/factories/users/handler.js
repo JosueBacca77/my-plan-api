@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserFactory = void 0;
+exports.getValidationSchema = exports.getUserFactory = void 0;
+const newUser_schema_1 = require("../../controllers/schemas/newUser.schema");
 const user_model_1 = require("../../models/user.model.");
 const ClientUserFactory_1 = require("./ClientUserFactory");
 const TrainerUserFactory_1 = require("./TrainerUserFactory");
@@ -17,3 +18,14 @@ const getUserFactory = (role) => {
     }
 };
 exports.getUserFactory = getUserFactory;
+const getValidationSchema = (role) => {
+    switch (role) {
+        case user_model_1.CLIENT:
+            return newUser_schema_1.newClientSchema;
+        case user_model_1.TRAINER:
+            return newUser_schema_1.newTrainerSchema;
+        default:
+            return null;
+    }
+};
+exports.getValidationSchema = getValidationSchema;

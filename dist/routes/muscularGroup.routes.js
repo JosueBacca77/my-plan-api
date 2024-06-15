@@ -10,7 +10,6 @@ const newMuscularGroup_schema_1 = require("../controllers/schemas/newMuscularGro
 const muscularGroupsRoutes = express_1.default.Router();
 muscularGroupsRoutes
     .route("/")
-    // .get(getAllMuscularGroups)
     .post((0, celebrate_1.celebrate)({ body: newMuscularGroup_schema_1.newMuscularGroupSchema }), muscularGroup_controller_1.postMUscularGroup);
 muscularGroupsRoutes
     .route("/:id")

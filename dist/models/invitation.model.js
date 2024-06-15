@@ -22,5 +22,9 @@ const invitationSchema = new mongoose_1.Schema({
         type: Date,
         default: Date.now() + 30 * 60 * 1000,
     },
+    isUsed: {
+        type: Boolean,
+        default: false,
+    },
 });
 exports.Invitation = (0, mongoose_1.model)("Invitation", invitationSchema);

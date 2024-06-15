@@ -1,4 +1,3 @@
-const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 import app from "./app";
@@ -13,7 +12,7 @@ dotenv.config({ path: `${__dirname}/.env` });
 
 const DB: string = process.env.DATABASE!.replace(
   "<PASSWORD>",
-  process.env.DATABASE_USER_PASSWORD!
+  process.env.DATABASE_USER_PASSWORD
 );
 
 mongoose
