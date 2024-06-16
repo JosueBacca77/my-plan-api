@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteMuscularGroup = exports.patchMuscularGroup = exports.postMUscularGroup = exports.getMuscularGroup = void 0;
+const muscularGroup_model_1 = require("../models/muscularGroup.model");
+const handlerFactory_1 = require("../patterns/factory/handlerFactory");
+// const getAllMuscularGroups = handlerFactory.getAllDocuments(MuscularGroup);
+exports.getMuscularGroup = handlerFactory_1.handlerFactory.getDocument(muscularGroup_model_1.MuscularGroup);
+exports.postMUscularGroup = handlerFactory_1.handlerFactory.createDocument(muscularGroup_model_1.MuscularGroup);
+exports.patchMuscularGroup = handlerFactory_1.handlerFactory.updateDocument(muscularGroup_model_1.MuscularGroup);
+exports.deleteMuscularGroup = handlerFactory_1.handlerFactory.deleteDocument(muscularGroup_model_1.MuscularGroup);

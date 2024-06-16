@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-import app from "./app";
+import app from "./src/app";
 
 process.on("uncaughtException", (error: Error) => {
   console.log("UNCAUGHT EXCEPTION");

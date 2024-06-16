@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const app_1 = __importDefault(require("./app"));
+const app_1 = __importDefault(require("./src/app"));
 process.on("uncaughtException", (error) => {
     console.log("UNCAUGHT EXCEPTION");
     console.log(error.name, error.message);
