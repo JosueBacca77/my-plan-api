@@ -1,10 +1,20 @@
-import Exercise from "../models/exercise.model";
-import { handlerFactory } from "../patterns/factory/handlerFactory";
+import { Request, Response } from "express";
+import createAsync from "../utils/catchAsync";
+import { NewPlan } from "../patterns/strategy/plans/creation/types";
+import { CreatePlanContext } from "../patterns/strategy/plans/creation/Plans";
 
-export const getExercise = handlerFactory.getDocument(Exercise);
+export const createPlanController = createAsync(
+    async (req: Request, res: Response): Promise<any> => {
+  
+     const plan: NewPlan = req.body;
 
-export const postExercise = handlerFactory.createDocument(Exercise);
+     const createPlanContext = new CreatePlanContext();
 
-export const patchExercise = handlerFactory.updateDocument(Exercise);
-
-export const deleteExercise = handlerFactory.deleteDocument(Exercise);
+     if(plan.specificRoutine && !plan.muscularGroupsPlan){
+        createPlanContext.setStrategy(new );
+     }
+  
+    //   res.status(response.statusCode).json(response);
+    }
+  );
+  
