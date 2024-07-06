@@ -20,9 +20,17 @@ const compression_1 = __importDefault(require("compression"));
 const exercise__routes_1 = __importDefault(require("./routes/exercise..routes"));
 const users__routes_1 = __importDefault(require("./routes/users..routes"));
 const invitation_routes_1 = __importDefault(require("./routes/invitation.routes"));
-// import '../global-augmentations'; // Adjust the path as necessary
 const target_routes_1 = __importDefault(require("./routes/target.routes "));
+const plans__routes_1 = __importDefault(require("./routes/plans..routes"));
+require("./global-augmentations");
 exports.app = (0, express_1.default)();
+// declare global {
+//   namespace Express {
+//     interface Request {
+//       user?: UserModel;
+//     }
+//   }
+// }
 exports.app.use((0, cors_1.default)());
 exports.app.options("*", (0, cors_1.default)());
 exports.app.use((0, helmet_1.default)({ contentSecurityPolicy: false }));
@@ -53,6 +61,7 @@ exports.app.use("/api/v1/exercises", exercise__routes_1.default);
 exports.app.use("/api/v1/users", users__routes_1.default);
 exports.app.use("/api/v1/invitations", invitation_routes_1.default);
 exports.app.use("/api/v1/targets", target_routes_1.default);
+exports.app.use("/api/v1/plans", plans__routes_1.default);
 exports.app.all("*", (req, res, next) => {
     next(new appError_1.default(`The route ${req.url} doesn't exist`, 404));
 });

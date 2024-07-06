@@ -9,7 +9,6 @@ import { ResponseBody } from "../../utils/http";
 import { RolUserFactory, getUserFactory, getValidationSchema } from "../../patterns/factory/users/handler";
 import { INewRoleUser } from "../../patterns/factory/users/UserFactory";
 import { Request, Response, NextFunction } from 'express';
-import { promisify } from 'util';
 import AppError from "../../utils/appError";
 
 
@@ -169,7 +168,6 @@ export const logInService = async (email: string, password: string)=>{
     return resp
 };
 
-
 export const protect = async (req: Request, res: Response, next: NextFunction) => {
   let token: string | null = null;
 
@@ -184,17 +182,20 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
   }
 
   try {
-    let user: UserModel | null = null
-    //Verification token
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded: DecodedToken) => {
-        if(err) return next(new AppError('You are not logged in! Please log in to get access', 401))
-            user = await User.findById(decoded.id)
-    })
 
-    //Using promisify we dont have to use callbacks like in the commented code above
-    // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as any;
+     // Crear una promesa para jwt.verify
+     const decoded = await new Promise<DecodedToken>((resolve, reject) => {
+      jwt.verify(token, process.env.JWT_SECRET!, (err, decoded) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(decoded as DecodedToken);
+        }
+      });
+    });
 
-    const freshUser: UserModel | null = await User.findById(user.id);
+    // Buscar usuario por ID
+    const freshUser: UserModel | null = await User.findById(decoded.id).lean();
 
     if (!freshUser) {
       return next(new AppError("The user belonging to this token does no longer exist", 401));
@@ -205,7 +206,7 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
     // }
 
     //Grant access to protected route
-    // req.user = freshUser;
+    req.user = freshUser;
     next();
   } catch (error) {
     return next(new AppError("You are not logged in! Please log in to get access", 401));

@@ -160,16 +160,19 @@ const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         return next(new appError_1.default("You are not logged in! Please log in to get access", 401));
     }
     try {
-        let user = null;
-        //Verification token
-        jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET, (err, decoded) => __awaiter(void 0, void 0, void 0, function* () {
-            if (err)
-                return next(new appError_1.default('You are not logged in! Please log in to get access', 401));
-            user = yield user_model_1.default.findById(decoded.id);
-        }));
-        //Using promisify we dont have to use callbacks like in the commented code above
-        // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as any;
-        const freshUser = yield user_model_1.default.findById(user.id);
+        // Crear una promesa para jwt.verify
+        const decoded = yield new Promise((resolve, reject) => {
+            jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(decoded);
+                }
+            });
+        });
+        // Buscar usuario por ID
+        const freshUser = yield user_model_1.default.findById(decoded.id).lean();
         if (!freshUser) {
             return next(new appError_1.default("The user belonging to this token does no longer exist", 401));
         }

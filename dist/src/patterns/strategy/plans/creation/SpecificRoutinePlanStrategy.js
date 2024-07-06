@@ -19,8 +19,8 @@ const target_model_1 = require("../../../../models/target.model");
 class SpecificRoutinePlanStrategy {
     createPlan(newPlan, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const client = yield client_model_1.default.find({ id: newPlan.client }).lean();
-            const target = yield target_model_1.Target.find({ id: newPlan.target }).lean();
+            const client = yield client_model_1.default.findOne({ "user.id": newPlan.client }).lean();
+            const target = yield target_model_1.Target.findById(newPlan.target).lean();
             const planToCreate = {
                 startDate: newPlan.startDate,
                 finishDate: newPlan.finishDate,
@@ -46,10 +46,10 @@ class SpecificRoutinePlanStrategy {
                     name: user.name,
                     lastName: user.lastName,
                     email: user.email,
-                    id: user.id,
+                    id: user._id,
                 }
             };
-            const planCreated = yield plan_model_1.Plan.create(newPlan);
+            const planCreated = yield plan_model_1.Plan.create(planToCreate);
             return planCreated;
         });
     }

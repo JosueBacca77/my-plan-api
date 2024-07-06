@@ -8,9 +8,9 @@ import { NewPlan } from "./types";
 export class SpecificRoutinePlanStrategy implements CreatePlanStrategy {
     async createPlan(newPlan: NewPlan, user:UserModel): Promise<any> {
 
-        const client: ClientModel = await Client.find({id: newPlan.client}).lean();
+        const client: ClientModel = await Client.findOne({"user.id": newPlan.client}).lean();
 
-        const target: TargetModel = await Target.find({id: newPlan.target}).lean();
+        const target: TargetModel = await Target.findById(newPlan.target).lean();
 
         const planToCreate: PlanModel = {
             startDate: newPlan.startDate,
@@ -37,14 +37,12 @@ export class SpecificRoutinePlanStrategy implements CreatePlanStrategy {
                 name: user.name,
                 lastName: user.lastName,
                 email: user.email,
-                id: user.id,
+                id: user._id,
             }
         }
 
-        const planCreated = await Plan.create(newPlan);
+        const planCreated = await Plan.create(planToCreate);
 
         return planCreated
-
-        
     }
 }

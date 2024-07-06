@@ -1,7 +1,8 @@
-import { UserModel } from "./src/models/user.model.";
+import { UserModel } from "./models/user.model.";
 
+//TODO: figure out how to import this file from app.ts
 // global-augmentations.d.ts
-export {};
+// export {};
 
 declare global {
   namespace Express {

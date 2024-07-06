@@ -14,10 +14,19 @@ import compression from "compression";
 import exercisesRoutes from "./routes/exercise..routes";
 import usersRoutes from "./routes/users..routes";
 import invitationsRoutes from "./routes/invitation.routes";
-// import '../global-augmentations'; // Adjust the path as necessary
 import targetsRoutes from "./routes/target.routes ";
+import { UserModel } from "./models/user.model.";
+import plansRoutes from "./routes/plans..routes";
 
 export const app = express();
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: UserModel;
+    }
+  }
+}
 
 app.use(cors());
 app.options("*", cors());
@@ -61,6 +70,7 @@ app.use("/api/v1/exercises", exercisesRoutes);
 app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/invitations", invitationsRoutes);
 app.use("/api/v1/targets", targetsRoutes);
+app.use("/api/v1/plans", plansRoutes);
 
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
