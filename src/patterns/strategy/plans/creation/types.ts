@@ -1,3 +1,5 @@
+import { PlanExerciseInterface } from "../../../../models/plan.model";
+
 interface SpecificRoutine {
     day: number;
     description: string;
@@ -31,9 +33,9 @@ export interface NewPlan {
     client: string;
     startDate: Date;
     finishDate: Date;
-    target: Target;
+    target: string;
     warmUp?: string;
     finalBlock?: string;
     specificRoutine?: SpecificRoutine[];
-    muscularGroupsPlan?: MuscularGroupPlan[];
+    planExercises?: PlanExerciseInterface[];
 }

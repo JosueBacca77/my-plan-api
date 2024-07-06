@@ -8,26 +8,38 @@ interface SpecificRoutineInterface {
 interface TrainerInterface {
   id: string;
   name: string;
-  userName: string;
+  lastName: string;
+  userName?: string;
   email: string;
 }
 
 interface ClientInterface {
   id: string;
   name: string;
-  userName: string;
+  userName?: string;
+  lastName: string;
   email: string;
-  age: number;
+  birthDate: Date;
   height: number;
   weight: number;
-  conditions: string[];
+  conditions?: string[];
 }
 
 interface TargetInterface {
+  id: string;
   name: string;
   description?: string;
   color: string;
 }
+
+const targetSchema = new Schema<TargetInterface>({
+  name: {
+    type: String,
+    required: [true, 'Target name is required']
+  },
+  description: String,
+  color:String,
+})
 
 interface MuscularGroupInterface {
   name: string;
@@ -45,7 +57,7 @@ interface ExerciseCombinationInterface {
   exercises: ExerciseInterface[];
 }
 
-interface PlanExerciseInterface {
+export interface PlanExerciseInterface {
   exercise: ExerciseInterface;
   day: string;
   series?: number;
@@ -60,7 +72,7 @@ interface PlanMuscularGroupInterface {
   exercises: PlanExerciseInterface[];
 }
 
-interface PlanModel extends Document {
+export interface PlanModel{
   startDate: Date;
   finishDate: Date;
   warmUp?: string;
@@ -69,7 +81,7 @@ interface PlanModel extends Document {
   trainer: TrainerInterface;
   client: ClientInterface;
   target: TargetInterface;
-  muscularGroups: PlanMuscularGroupInterface[];
+  muscularGroups?: PlanMuscularGroupInterface[];
 }
 
 const muscularGroupSchema = new Schema<MuscularGroupInterface>({
@@ -87,6 +99,18 @@ const exerciseSchema = new Schema<ExerciseInterface>({
   },
   description: String,
   files: [String]
+})
+
+const clientSchema = new Schema<ClientInterface>({
+  id: String,
+  name: String,
+  userName: String,
+  lastName: String,
+  email: String,
+  birthDate: Date,
+  height: Number,
+  weight: Number,
+  conditions: [String],
 })
 
 const exerciseCombinationSchema = new Schema<ExerciseCombinationInterface>({
@@ -132,6 +156,10 @@ const planSchema = new Schema<PlanModel>({
   },
   warmUp: String,
   finalBlock: String,
+  target: {
+    type: targetSchema,
+    required:[true, 'Target plan is required']
+  },
   trainer: {
     type: {
       id: {
@@ -142,10 +170,14 @@ const planSchema = new Schema<PlanModel>({
         type: String,
         required: [true, "Trainer name is required"],
       },
-      userName: {
+      lastName: {
         type: String,
-        required: [true, "Trainer user name is required"],
+        required: [true, "Trainer name is required"],
       },
+      // userName: {
+      //   type: String,
+      //   required: [true, "Trainer user name is required"],
+      // },
       email: {
         type: String,
         required: [true, "Trainer email is required"],
@@ -159,11 +191,12 @@ const planSchema = new Schema<PlanModel>({
       day: String,
     },
   ],
+  client: {
+    type: clientSchema
+  },
   muscularGroups: {
     type: [planMuscularGroupSchema]
   }
 });
 
-const Plan = model<PlanModel>("Plan", planSchema);
-
-export default Plan;
+export const Plan = model<PlanModel>("Plan", planSchema);

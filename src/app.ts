@@ -14,6 +14,7 @@ import compression from "compression";
 import exercisesRoutes from "./routes/exercise..routes";
 import usersRoutes from "./routes/users..routes";
 import invitationsRoutes from "./routes/invitation.routes";
+import '../global-augmentations'; // Adjust the path as necessary
 
 export const app = express();
 

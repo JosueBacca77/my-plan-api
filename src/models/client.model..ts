@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 
-export interface ClientModel extends Document {
+export interface ClientModel {
   birthDate: Date;
   height: number;
   weight: number;

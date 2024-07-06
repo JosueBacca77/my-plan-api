@@ -2,12 +2,15 @@ import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { RequestSignUpClientBody, RequestSignUpTrainerBody } from "../../controllers/User/types";
-import { GeneratedToken, LoginResponse } from "./types";
+import { DecodedToken, GeneratedToken, LoginResponse } from "./types";
 import User, { UserModel } from "../../models/user.model.";
 import { Invitation } from "../../models/invitation.model";
 import { ResponseBody } from "../../utils/http";
 import { RolUserFactory, getUserFactory, getValidationSchema } from "../../patterns/factory/users/handler";
 import { INewRoleUser } from "../../patterns/factory/users/UserFactory";
+import { Request, Response, NextFunction } from 'express';
+import { promisify } from 'util';
+import AppError from "../../utils/appError";
 
 
 const checkPassword = async function (candidatePassword: string, userPassword: string) {
@@ -164,4 +167,47 @@ export const logInService = async (email: string, password: string)=>{
     };
 
     return resp
+};
+
+
+export const protect = async (req: Request, res: Response, next: NextFunction) => {
+  let token: string | null = null;
+
+  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    token = req.headers.authorization.split(" ")[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+
+  if (!token) {
+    return next(new AppError("You are not logged in! Please log in to get access", 401));
+  }
+
+  try {
+    let user: UserModel | null = null
+    //Verification token
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded: DecodedToken) => {
+        if(err) return next(new AppError('You are not logged in! Please log in to get access', 401))
+            user = await User.findById(decoded.id)
+    })
+
+    //Using promisify we dont have to use callbacks like in the commented code above
+    // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as any;
+
+    const freshUser: UserModel | null = await User.findById(user.id);
+
+    if (!freshUser) {
+      return next(new AppError("The user belonging to this token does no longer exist", 401));
+    }
+
+    // if (freshUser.changedPasswordAfter(decoded.iat)) {
+    //   return next(new AppError("User recently changed password! Please log in again", 401));
+    // }
+
+    //Grant access to protected route
+    req.user = freshUser;
+    next();
+  } catch (error) {
+    return next(new AppError("You are not logged in! Please log in to get access", 401));
+  }
 };

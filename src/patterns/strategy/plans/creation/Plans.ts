@@ -1,3 +1,4 @@
+import { UserModel } from "../../../../models/user.model.";
 import { CreatePlanStrategy } from "./Strategy"
 import { NewPlan } from "./types";
 
@@ -8,9 +9,9 @@ export class CreatePlanContext {
         this.strategy = strategy;
     };
 
-    createPlan(newPlan: NewPlan){
+    async createPlan(newPlan: NewPlan, user: UserModel){
         if(!this.strategy) throw new Error('Creation plan stratgy not set');
 
-        this.strategy.createPlan(newPlan);
+        this.strategy.createPlan(newPlan, user);
     };
 }
