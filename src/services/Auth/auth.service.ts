@@ -205,7 +205,7 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
     // }
 
     //Grant access to protected route
-    req.user = freshUser;
+    // req.user = freshUser;
     next();
   } catch (error) {
     return next(new AppError("You are not logged in! Please log in to get access", 401));

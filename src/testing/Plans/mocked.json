@@ -1,0 +1,221 @@
+[
+    {
+      "startDate": "2023-01-01T00:00:00.000Z",
+      "finishDate": "2023-06-01T00:00:00.000Z",
+      "warmUp": "10 minutes jogging",
+      "finalBlock": "Stretching",
+      "specificRoutine": [
+        {
+          "description": "Cardio routine",
+          "day": "Monday"
+        },
+        {
+          "description": "Strength training",
+          "day": "Wednesday"
+        }
+      ],
+      "trainer": {
+        "id": "trainer1",
+        "name": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com"
+      },
+      "client": {
+        "id": "client1",
+        "name": "Jane",
+        "lastName": "Smith",
+        "userName": "janesmith",
+        "email": "jane.smith@example.com",
+        "birthDate": "1990-04-15T00:00:00.000Z",
+        "height": 165,
+        "weight": 60,
+        "conditions": ["asthma"]
+      },
+      "target": {
+        "id": "target1",
+        "name": "Weight Loss",
+        "description": "Focus on losing weight",
+        "color": "red"
+      },
+      "muscularGroups": [
+        {
+          "muscularGroup": {
+            "name": "Legs",
+            "description": "Leg exercises"
+          },
+          "exercises": [
+            {
+              "exercise": {
+                "name": "Squats",
+                "description": "Basic squats",
+                "files": []
+              },
+              "day": "Monday",
+              "series": 3,
+              "repetitions": "12",
+              "explanation": "Perform each squat with proper form",
+              "metodology": "Standard sets and reps",
+              "combination": null
+            },
+            {
+              "exercise": {
+                "name": "Lunges",
+                "description": "Basic lunges",
+                "files": []
+              },
+              "day": "Wednesday",
+              "series": 3,
+              "repetitions": "15",
+              "explanation": "Perform each lunge with proper form",
+              "metodology": "Standard sets and reps",
+              "combination": null
+            }
+          ]
+        },
+        {
+          "muscularGroup": {
+            "name": "Arms",
+            "description": "Arm exercises"
+          },
+          "exercises": [
+            {
+              "exercise": {
+                "name": "Bicep Curls",
+                "description": "Basic bicep curls",
+                "files": []
+              },
+              "day": "Monday",
+              "series": 3,
+              "repetitions": "12",
+              "explanation": "Perform each curl with proper form",
+              "metodology": "Standard sets and reps",
+              "combination": null
+            },
+            {
+              "exercise": {
+                "name": "Tricep Dips",
+                "description": "Basic tricep dips",
+                "files": []
+              },
+              "day": "Wednesday",
+              "series": 3,
+              "repetitions": "15",
+              "explanation": "Perform each dip with proper form",
+              "metodology": "Standard sets and reps",
+              "combination": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "startDate": "2023-02-01T00:00:00.000Z",
+      "finishDate": "2023-07-01T00:00:00.000Z",
+      "warmUp": "5 minutes jumping jacks",
+      "finalBlock": "Cool down and stretching",
+      "specificRoutine": [
+        {
+          "description": "HIIT training",
+          "day": "Tuesday"
+        },
+        {
+          "description": "Yoga",
+          "day": "Thursday"
+        }
+      ],
+      "trainer": {
+        "id": "trainer2",
+        "name": "Alice",
+        "lastName": "Johnson",
+        "email": "alice.johnson@example.com"
+      },
+      "client": {
+        "id": "client2",
+        "name": "Bob",
+        "lastName": "Brown",
+        "userName": "bobbrown",
+        "email": "bob.brown@example.com",
+        "birthDate": "1985-07-20T00:00:00.000Z",
+        "height": 180,
+        "weight": 75,
+        "conditions": ["diabetes"]
+      },
+      "target": {
+        "id": "target2",
+        "name": "Muscle Gain",
+        "description": "Focus on building muscle",
+        "color": "blue"
+      },
+      "muscularGroups": [
+        {
+          "muscularGroup": {
+            "name": "Chest",
+            "description": "Chest exercises"
+          },
+          "exercises": [
+            {
+              "exercise": {
+                "name": "Bench Press",
+                "description": "Basic bench press",
+                "files": []
+              },
+              "day": "Tuesday",
+              "series": 4,
+              "repetitions": "10",
+              "explanation": "Perform each press with proper form",
+              "metodology": "Standard sets and reps",
+              "combination": null
+            },
+            {
+              "exercise": {
+                "name": "Chest Fly",
+                "description": "Basic chest fly",
+                "files": []
+              },
+              "day": "Thursday",
+              "series": 4,
+              "repetitions": "12",
+              "explanation": "Perform each fly with proper form",
+              "metodology": "Standard sets and reps",
+              "combination": null
+            }
+          ]
+        },
+        {
+          "muscularGroup": {
+            "name": "Back",
+            "description": "Back exercises"
+          },
+          "exercises": [
+            {
+              "exercise": {
+                "name": "Pull Ups",
+                "description": "Basic pull ups",
+                "files": []
+              },
+              "day": "Tuesday",
+              "series": 4,
+              "repetitions": "8",
+              "explanation": "Perform each pull up with proper form",
+              "metodology": "Standard sets and reps",
+              "combination": null
+            },
+            {
+              "exercise": {
+                "name": "Deadlift",
+                "description": "Basic deadlift",
+                "files": []
+              },
+              "day": "Thursday",
+              "series": 4,
+              "repetitions": "10",
+              "explanation": "Perform each deadlift with proper form",
+              "metodology": "Standard sets and reps",
+              "combination": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  

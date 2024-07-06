@@ -6,7 +6,7 @@ import { CreatePlanStrategy } from "./Strategy";
 import { NewPlan } from "./types";
 
 export class SpecificRoutinePlanStrategy implements CreatePlanStrategy {
-    async createPlan(newPlan: NewPlan, user:UserModel): Promise<void> {
+    async createPlan(newPlan: NewPlan, user:UserModel): Promise<any> {
 
         const client: ClientModel = await Client.find({id: newPlan.client}).lean();
 
@@ -41,7 +41,9 @@ export class SpecificRoutinePlanStrategy implements CreatePlanStrategy {
             }
         }
 
-        await Plan.create(newPlan);
+        const planCreated = await Plan.create(newPlan);
+
+        return planCreated
 
         
     }

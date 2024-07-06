@@ -6,7 +6,7 @@ import { NewPlan } from "../patterns/strategy/plans/creation/types";
 import { Plan } from "../models/plan.model";
 
 
-export const createPlan = async (user: UserModel, plan: NewPlan): Promise<PlanExerciseInterface>=>{
+export const createPlan = async (user: UserModel, plan: NewPlan): Promise<PlanModel>=>{
 
     const createPlanContext = new CreatePlanContext();
 
@@ -14,7 +14,7 @@ export const createPlan = async (user: UserModel, plan: NewPlan): Promise<PlanEx
        createPlanContext.setStrategy(new SpecificRoutinePlanStrategy);
     };
 
-    const createdPlan = await createPlanContext.createPlan(plan)
+    const createdPlan = await createPlanContext.createPlan(plan, user)
 
     return createdPlan
 

@@ -14,7 +14,8 @@ import compression from "compression";
 import exercisesRoutes from "./routes/exercise..routes";
 import usersRoutes from "./routes/users..routes";
 import invitationsRoutes from "./routes/invitation.routes";
-import '../global-augmentations'; // Adjust the path as necessary
+// import '../global-augmentations'; // Adjust the path as necessary
+import targetsRoutes from "./routes/target.routes ";
 
 export const app = express();
 
@@ -59,6 +60,8 @@ app.use("/api/v1/muscular-groups", muscularGroupsRouter);
 app.use("/api/v1/exercises", exercisesRoutes);
 app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/invitations", invitationsRoutes);
+app.use("/api/v1/targets", targetsRoutes);
+
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(new AppError(`The route ${req.url} doesn't exist`, 404));

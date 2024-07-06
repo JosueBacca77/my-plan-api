@@ -12,6 +12,6 @@ export class CreatePlanContext {
     async createPlan(newPlan: NewPlan, user: UserModel){
         if(!this.strategy) throw new Error('Creation plan stratgy not set');
 
-        this.strategy.createPlan(newPlan, user);
+        return this.strategy.createPlan(newPlan, user);
     };
 }

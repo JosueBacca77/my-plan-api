@@ -12,13 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logInService = exports.signUpService = void 0;
+exports.protect = exports.logInService = exports.signUpService = void 0;
 const crypto_1 = __importDefault(require("crypto"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const user_model_1 = __importDefault(require("../../models/user.model."));
 const invitation_model_1 = require("../../models/invitation.model");
 const handler_1 = require("../../patterns/factory/users/handler");
+const appError_1 = __importDefault(require("../../utils/appError"));
 const checkPassword = function (candidatePassword, userPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield bcryptjs_1.default.compare(candidatePassword, userPassword);
@@ -147,3 +148,40 @@ const logInService = (email, password) => __awaiter(void 0, void 0, void 0, func
     return resp;
 });
 exports.logInService = logInService;
+const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let token = null;
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        token = req.headers.authorization.split(" ")[1];
+    }
+    else if (req.cookies.jwt) {
+        token = req.cookies.jwt;
+    }
+    if (!token) {
+        return next(new appError_1.default("You are not logged in! Please log in to get access", 401));
+    }
+    try {
+        let user = null;
+        //Verification token
+        jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET, (err, decoded) => __awaiter(void 0, void 0, void 0, function* () {
+            if (err)
+                return next(new appError_1.default('You are not logged in! Please log in to get access', 401));
+            user = yield user_model_1.default.findById(decoded.id);
+        }));
+        //Using promisify we dont have to use callbacks like in the commented code above
+        // const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET!) as any;
+        const freshUser = yield user_model_1.default.findById(user.id);
+        if (!freshUser) {
+            return next(new appError_1.default("The user belonging to this token does no longer exist", 401));
+        }
+        // if (freshUser.changedPasswordAfter(decoded.iat)) {
+        //   return next(new AppError("User recently changed password! Please log in again", 401));
+        // }
+        //Grant access to protected route
+        req.user = freshUser;
+        next();
+    }
+    catch (error) {
+        return next(new appError_1.default("You are not logged in! Please log in to get access", 401));
+    }
+});
+exports.protect = protect;
