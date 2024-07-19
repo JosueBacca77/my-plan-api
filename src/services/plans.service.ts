@@ -1,9 +1,9 @@
-import { PlanExerciseInterface, PlanModel } from "../models/plan.model";
+import { PlanModel } from "../models/plan.model";
 import { UserModel } from "../models/user.model.";
+import { MuscularGroupPlanStrategy } from "../patterns/strategy/plans/creation/MuscularGroupsPlanStrategy";
 import { CreatePlanContext } from "../patterns/strategy/plans/creation/Plans";
 import { SpecificRoutinePlanStrategy } from "../patterns/strategy/plans/creation/SpecificRoutinePlanStrategy";
 import { NewPlan } from "../patterns/strategy/plans/creation/types";
-import { Plan } from "../models/plan.model";
 
 
 export const createPlan = async (user: UserModel, plan: NewPlan): Promise<PlanModel>=>{
@@ -14,6 +14,9 @@ export const createPlan = async (user: UserModel, plan: NewPlan): Promise<PlanMo
        createPlanContext.setStrategy(new SpecificRoutinePlanStrategy);
     };
 
+    if(plan.planExercises && !plan.specificRoutine){
+        createPlanContext.setStrategy(new MuscularGroupPlanStrategy);
+    };
     const createdPlan = await createPlanContext.createPlan(plan, user)
 
     return createdPlan

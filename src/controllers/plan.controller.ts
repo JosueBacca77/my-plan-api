@@ -36,14 +36,6 @@ export const createPlanController = createAsync(
 
      const createdPlan = await createPlan(user, plan);
     
-   //   if(plan.specificRoutine && plan.planExercises && !plan.specificRoutine){
-   //       createPlanContext.setStrategy(new MuscularGroupPlanStrategy);
-   //    }
-
-   //    if(plan.specificRoutine && plan.planExercises && !plan.specificRoutine){
-   //       createPlanContext.setStrategy(new MuscularGroupPlanStrategy);
-   //    }
-  
       const response: ResponseBody = {
         status: "success",
         statusCode: 201,

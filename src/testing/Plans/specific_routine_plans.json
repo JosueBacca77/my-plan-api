@@ -1,0 +1,892 @@
+[
+  {
+    "startDate": "2024-07-09T21:28:42.016Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "5 minutes jumping jacks",
+    "finalBlock": "Yoga poses",
+    "specificRoutine": [
+      {
+        "description": "HIIT training",
+        "day": "Friday"
+      },
+      {
+        "description": "Strength training",
+        "day": "Tuesday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer1",
+      "name": "Alice",
+      "lastName": "Johnson",
+      "email": "alice.johnson@example.com"
+    },
+    "client": {
+      "id": "client1",
+      "name": "Bob",
+      "lastName": "Brown",
+      "userName": "bobbrown",
+      "email": "bob.brown@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 171,
+      "weight": 50,
+      "conditions": [
+        "hypertension"
+      ]
+    },
+    "target": {
+      "id": "target1",
+      "name": "Muscle Gain",
+      "description": "Basic exercise",
+      "color": "blue"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Arms",
+          "description": "Basic exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Pull Ups",
+              "description": "Advanced exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Monday",
+            "series": 4,
+            "repetitions": "13",
+            "explanation": "Basic exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Legs",
+          "description": "Basic exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Lunges",
+              "description": "Intermediate exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Wednesday",
+            "series": 4,
+            "repetitions": "13",
+            "explanation": "Basic exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "startDate": "2024-07-09T21:28:42.017Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "10 minutes jogging",
+    "finalBlock": "Stretching",
+    "specificRoutine": [
+      {
+        "description": "Cardio routine",
+        "day": "Monday"
+      },
+      {
+        "description": "Yoga",
+        "day": "Thursday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer2",
+      "name": "Robert",
+      "lastName": "Brown",
+      "email": "robert.brown@example.com"
+    },
+    "client": {
+      "id": "client2",
+      "name": "Jane",
+      "lastName": "Smith",
+      "userName": "janesmith",
+      "email": "jane.smith@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 168,
+      "weight": 63,
+      "conditions": [
+        "hypertension"
+      ]
+    },
+    "target": {
+      "id": "target2",
+      "name": "Weight Loss",
+      "description": "Basic exercise",
+      "color": "green"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Legs",
+          "description": "Intermediate exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Bench Press",
+              "description": "Advanced exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Thursday",
+            "series": 2,
+            "repetitions": "14",
+            "explanation": "Advanced exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Legs",
+          "description": "Advanced exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Deadlift",
+              "description": "Intermediate exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Friday",
+            "series": 1,
+            "repetitions": "11",
+            "explanation": "Advanced exercise",
+            "metodology": "Intermediate exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "startDate": "2024-07-09T21:28:42.017Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "5 minutes jumping jacks",
+    "finalBlock": "Cool down and stretching",
+    "specificRoutine": [
+      {
+        "description": "Strength training",
+        "day": "Monday"
+      },
+      {
+        "description": "Yoga",
+        "day": "Friday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer3",
+      "name": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com"
+    },
+    "client": {
+      "id": "client3",
+      "name": "Bob",
+      "lastName": "Brown",
+      "userName": "bobbrown",
+      "email": "bob.brown@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 193,
+      "weight": 96,
+      "conditions": [
+        "asthma"
+      ]
+    },
+    "target": {
+      "id": "target3",
+      "name": "Flexibility",
+      "description": "Intermediate exercise",
+      "color": "yellow"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Chest",
+          "description": "Basic exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Chest Fly",
+              "description": "Intermediate exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Wednesday",
+            "series": 3,
+            "repetitions": "8",
+            "explanation": "Intermediate exercise",
+            "metodology": "Advanced exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Legs",
+          "description": "Basic exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Chest Fly",
+              "description": "Basic exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Thursday",
+            "series": 4,
+            "repetitions": "12",
+            "explanation": "Advanced exercise",
+            "metodology": "Intermediate exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "startDate": "2024-07-09T21:28:42.017Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "10 minutes cycling",
+    "finalBlock": "Yoga poses",
+    "specificRoutine": [
+      {
+        "description": "Yoga",
+        "day": "Tuesday"
+      },
+      {
+        "description": "Strength training",
+        "day": "Tuesday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer4",
+      "name": "Alice",
+      "lastName": "Johnson",
+      "email": "alice.johnson@example.com"
+    },
+    "client": {
+      "id": "client4",
+      "name": "Alice",
+      "lastName": "Wilson",
+      "userName": "alicewilson",
+      "email": "alice.wilson@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 175,
+      "weight": 91,
+      "conditions": [
+        "hypertension"
+      ]
+    },
+    "target": {
+      "id": "target4",
+      "name": "Weight Loss",
+      "description": "Intermediate exercise",
+      "color": "yellow"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Chest",
+          "description": "Basic exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Lunges",
+              "description": "Advanced exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Tuesday",
+            "series": 4,
+            "repetitions": "13",
+            "explanation": "Intermediate exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Chest",
+          "description": "Advanced exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Pull Ups",
+              "description": "Intermediate exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Monday",
+            "series": 2,
+            "repetitions": "14",
+            "explanation": "Intermediate exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "startDate": "2024-07-09T21:28:42.017Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "10 minutes cycling",
+    "finalBlock": "Yoga poses",
+    "specificRoutine": [
+      {
+        "description": "Strength training",
+        "day": "Wednesday"
+      },
+      {
+        "description": "Yoga",
+        "day": "Friday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer5",
+      "name": "Robert",
+      "lastName": "Brown",
+      "email": "robert.brown@example.com"
+    },
+    "client": {
+      "id": "client5",
+      "name": "Bob",
+      "lastName": "Brown",
+      "userName": "bobbrown",
+      "email": "bob.brown@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 163,
+      "weight": 87,
+      "conditions": [
+        "asthma"
+      ]
+    },
+    "target": {
+      "id": "target5",
+      "name": "Muscle Gain",
+      "description": "Basic exercise",
+      "color": "yellow"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Back",
+          "description": "Basic exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Deadlift",
+              "description": "Basic exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Friday",
+            "series": 3,
+            "repetitions": "8",
+            "explanation": "Basic exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Chest",
+          "description": "Intermediate exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Tricep Dips",
+              "description": "Intermediate exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Tuesday",
+            "series": 3,
+            "repetitions": "8",
+            "explanation": "Advanced exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "startDate": "2024-07-09T21:28:42.017Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "10 minutes jogging",
+    "finalBlock": "Yoga poses",
+    "specificRoutine": [
+      {
+        "description": "HIIT training",
+        "day": "Tuesday"
+      },
+      {
+        "description": "Cardio routine",
+        "day": "Tuesday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer6",
+      "name": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com"
+    },
+    "client": {
+      "id": "client6",
+      "name": "Alice",
+      "lastName": "Wilson",
+      "userName": "alicewilson",
+      "email": "alice.wilson@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 196,
+      "weight": 93,
+      "conditions": [
+        "asthma"
+      ]
+    },
+    "target": {
+      "id": "target6",
+      "name": "Flexibility",
+      "description": "Basic exercise",
+      "color": "blue"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Chest",
+          "description": "Intermediate exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Bicep Curls",
+              "description": "Basic exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Wednesday",
+            "series": 3,
+            "repetitions": "14",
+            "explanation": "Basic exercise",
+            "metodology": "Advanced exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Chest",
+          "description": "Advanced exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Lunges",
+              "description": "Advanced exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Tuesday",
+            "series": 1,
+            "repetitions": "14",
+            "explanation": "Advanced exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "startDate": "2024-07-09T21:28:42.017Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "10 minutes cycling",
+    "finalBlock": "Cool down and stretching",
+    "specificRoutine": [
+      {
+        "description": "Yoga",
+        "day": "Monday"
+      },
+      {
+        "description": "Strength training",
+        "day": "Wednesday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer7",
+      "name": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com"
+    },
+    "client": {
+      "id": "client7",
+      "name": "Charlie",
+      "lastName": "Johnson",
+      "userName": "charliejohnson",
+      "email": "charlie.johnson@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 151,
+      "weight": 88,
+      "conditions": [
+        "diabetes"
+      ]
+    },
+    "target": {
+      "id": "target7",
+      "name": "Muscle Gain",
+      "description": "Advanced exercise",
+      "color": "green"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Arms",
+          "description": "Intermediate exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Deadlift",
+              "description": "Advanced exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Tuesday",
+            "series": 3,
+            "repetitions": "8",
+            "explanation": "Intermediate exercise",
+            "metodology": "Advanced exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Arms",
+          "description": "Intermediate exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Tricep Dips",
+              "description": "Advanced exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Tuesday",
+            "series": 3,
+            "repetitions": "13",
+            "explanation": "Basic exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "startDate": "2024-07-09T21:28:42.017Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "10 minutes cycling",
+    "finalBlock": "Cool down and stretching",
+    "specificRoutine": [
+      {
+        "description": "Yoga",
+        "day": "Friday"
+      },
+      {
+        "description": "Yoga",
+        "day": "Wednesday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer8",
+      "name": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com"
+    },
+    "client": {
+      "id": "client8",
+      "name": "Jane",
+      "lastName": "Smith",
+      "userName": "janesmith",
+      "email": "jane.smith@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 153,
+      "weight": 54,
+      "conditions": [
+        "diabetes"
+      ]
+    },
+    "target": {
+      "id": "target8",
+      "name": "Muscle Gain",
+      "description": "Basic exercise",
+      "color": "blue"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Back",
+          "description": "Advanced exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Chest Fly",
+              "description": "Advanced exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Monday",
+            "series": 1,
+            "repetitions": "12",
+            "explanation": "Advanced exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Legs",
+          "description": "Advanced exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Chest Fly",
+              "description": "Advanced exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Tuesday",
+            "series": 4,
+            "repetitions": "11",
+            "explanation": "Intermediate exercise",
+            "metodology": "Advanced exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "startDate": "2024-07-09T21:28:42.017Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "10 minutes cycling",
+    "finalBlock": "Yoga poses",
+    "specificRoutine": [
+      {
+        "description": "Yoga",
+        "day": "Monday"
+      },
+      {
+        "description": "HIIT training",
+        "day": "Tuesday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer9",
+      "name": "Emily",
+      "lastName": "Davis",
+      "email": "emily.davis@example.com"
+    },
+    "client": {
+      "id": "client9",
+      "name": "Alice",
+      "lastName": "Wilson",
+      "userName": "alicewilson",
+      "email": "alice.wilson@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 199,
+      "weight": 94,
+      "conditions": [
+        "hypertension"
+      ]
+    },
+    "target": {
+      "id": "target9",
+      "name": "Flexibility",
+      "description": "Advanced exercise",
+      "color": "red"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Back",
+          "description": "Intermediate exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Deadlift",
+              "description": "Intermediate exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Monday",
+            "series": 3,
+            "repetitions": "9",
+            "explanation": "Advanced exercise",
+            "metodology": "Intermediate exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Back",
+          "description": "Basic exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Bicep Curls",
+              "description": "Basic exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Friday",
+            "series": 2,
+            "repetitions": "8",
+            "explanation": "Basic exercise",
+            "metodology": "Basic exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "startDate": "2024-07-09T21:28:42.017Z",
+    "finishDate": "2024-07-09T21:28:42.017Z",
+    "warmUp": "10 minutes cycling",
+    "finalBlock": "Yoga poses",
+    "specificRoutine": [
+      {
+        "description": "Cardio routine",
+        "day": "Thursday"
+      },
+      {
+        "description": "Strength training",
+        "day": "Monday"
+      }
+    ],
+    "trainer": {
+      "id": "trainer10",
+      "name": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com"
+    },
+    "client": {
+      "id": "client10",
+      "name": "Jane",
+      "lastName": "Smith",
+      "userName": "janesmith",
+      "email": "jane.smith@example.com",
+      "birthDate": "1990-02-01T02:00:00.000Z",
+      "height": 195,
+      "weight": 96,
+      "conditions": [
+        "asthma"
+      ]
+    },
+    "target": {
+      "id": "target10",
+      "name": "Flexibility",
+      "description": "Basic exercise",
+      "color": "yellow"
+    },
+    "muscularGroups": [
+      {
+        "muscularGroup": {
+          "name": "Arms",
+          "description": "Advanced exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Bicep Curls",
+              "description": "Basic exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Monday",
+            "series": 2,
+            "repetitions": "12",
+            "explanation": "Intermediate exercise",
+            "metodology": "Intermediate exercise",
+            "combination": null
+          }
+        ]
+      },
+      {
+        "muscularGroup": {
+          "name": "Chest",
+          "description": "Basic exercise"
+        },
+        "exercises": [
+          {
+            "exercise": {
+              "name": "Chest Fly",
+              "description": "Intermediate exercise",
+              "files": [
+                "example.png"
+              ]
+            },
+            "day": "Tuesday",
+            "series": 3,
+            "repetitions": "13",
+            "explanation": "Intermediate exercise",
+            "metodology": "Intermediate exercise",
+            "combination": null
+          }
+        ]
+      }
+    ]
+  }
+]

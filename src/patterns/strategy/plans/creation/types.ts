@@ -1,33 +1,20 @@
-import { PlanExerciseInterface } from "../../../../models/plan.model";
+import { Types } from "mongoose";
 
 interface SpecificRoutine {
-    day: number;
+    day: string;
     description: string;
 }
 
-interface MuscularGroup {
-    name: string;
-    description: string;
-}
-
-interface PlanExercise {
+export interface NewPlanExerciseInterface {
+    exercise: Types.ObjectId;
     day: string;
     series?: number;
     repetitions?: string;
-    explanation?: string;
-    metodology?: string;
-}
-
-interface MuscularGroupPlan {
-    muscularGroup: MuscularGroup;
-    exercises: PlanExercise[];
-}
-
-interface Target {
-    id: string;
-    name: string;
-    color: string;
-}
+    explanation: string;
+    metodology?: string; //it's for be used insstead of series and repetitions
+    // combination?: ExerciseCombinationInterface;
+  }
+  
 
 export interface NewPlan {
     client: string;
@@ -37,5 +24,5 @@ export interface NewPlan {
     warmUp?: string;
     finalBlock?: string;
     specificRoutine?: SpecificRoutine[];
-    planExercises?: PlanExerciseInterface[];
+    planExercises?: NewPlanExerciseInterface[];
 }

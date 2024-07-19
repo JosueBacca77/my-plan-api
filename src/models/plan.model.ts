@@ -1,4 +1,4 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
 interface SpecificRoutineInterface {
   description: string;
@@ -42,6 +42,7 @@ const targetSchema = new Schema<TargetInterface>({
 })
 
 interface MuscularGroupInterface {
+  id: Types.ObjectId;
   name: string;
   description?: string;
 }
@@ -67,7 +68,7 @@ export interface PlanExerciseInterface {
   combination?: ExerciseCombinationInterface;
 }
 
-interface PlanMuscularGroupInterface {
+export interface PlanMuscularGroupInterface {
   muscularGroup: MuscularGroupInterface;
   exercises: PlanExerciseInterface[];
 }

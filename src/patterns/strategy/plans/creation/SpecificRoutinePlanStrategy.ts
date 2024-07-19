@@ -38,7 +38,8 @@ export class SpecificRoutinePlanStrategy implements CreatePlanStrategy {
                 lastName: user.lastName,
                 email: user.email,
                 id: user._id,
-            }
+            },
+            specificRoutine: newPlan.specificRoutine
         }
 
         const planCreated = await Plan.create(planToCreate);
