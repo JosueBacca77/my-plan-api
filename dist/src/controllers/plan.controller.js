@@ -40,12 +40,6 @@ exports.createPlanController = (0, catchAsync_1.default)((req, res) => __awaiter
         return response;
     }
     const createdPlan = yield (0, plans_service_1.createPlan)(user, plan);
-    //   if(plan.specificRoutine && plan.planExercises && !plan.specificRoutine){
-    //       createPlanContext.setStrategy(new MuscularGroupPlanStrategy);
-    //    }
-    //    if(plan.specificRoutine && plan.planExercises && !plan.specificRoutine){
-    //       createPlanContext.setStrategy(new MuscularGroupPlanStrategy);
-    //    }
     const response = {
         status: "success",
         statusCode: 201,

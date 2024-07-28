@@ -47,7 +47,8 @@ class SpecificRoutinePlanStrategy {
                     lastName: user.lastName,
                     email: user.email,
                     id: user._id,
-                }
+                },
+                specificRoutine: newPlan.specificRoutine
             };
             const planCreated = yield plan_model_1.Plan.create(planToCreate);
             return planCreated;

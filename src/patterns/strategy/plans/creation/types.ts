@@ -11,7 +11,7 @@ export interface NewPlanExerciseInterface {
     series?: number;
     repetitions?: string;
     explanation: string;
-    metodology?: string; //it's for be used insstead of series and repetitions
+    metodology?: string; //it's for be used instead of series and repetitions
     // combination?: ExerciseCombinationInterface;
   }
   

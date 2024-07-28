@@ -22,15 +22,7 @@ const users__routes_1 = __importDefault(require("./routes/users..routes"));
 const invitation_routes_1 = __importDefault(require("./routes/invitation.routes"));
 const target_routes_1 = __importDefault(require("./routes/target.routes "));
 const plans__routes_1 = __importDefault(require("./routes/plans..routes"));
-require("./global-augmentations");
 exports.app = (0, express_1.default)();
-// declare global {
-//   namespace Express {
-//     interface Request {
-//       user?: UserModel;
-//     }
-//   }
-// }
 exports.app.use((0, cors_1.default)());
 exports.app.options("*", (0, cors_1.default)());
 exports.app.use((0, helmet_1.default)({ contentSecurityPolicy: false }));

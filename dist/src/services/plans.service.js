@@ -10,12 +10,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createPlan = void 0;
+const MuscularGroupsPlanStrategy_1 = require("../patterns/strategy/plans/creation/MuscularGroupsPlanStrategy");
 const Plans_1 = require("../patterns/strategy/plans/creation/Plans");
 const SpecificRoutinePlanStrategy_1 = require("../patterns/strategy/plans/creation/SpecificRoutinePlanStrategy");
 const createPlan = (user, plan) => __awaiter(void 0, void 0, void 0, function* () {
     const createPlanContext = new Plans_1.CreatePlanContext();
     if (!plan.planExercises && plan.specificRoutine) {
         createPlanContext.setStrategy(new SpecificRoutinePlanStrategy_1.SpecificRoutinePlanStrategy);
+    }
+    ;
+    if (plan.planExercises && !plan.specificRoutine) {
+        createPlanContext.setStrategy(new MuscularGroupsPlanStrategy_1.MuscularGroupPlanStrategy);
     }
     ;
     const createdPlan = yield createPlanContext.createPlan(plan, user);
