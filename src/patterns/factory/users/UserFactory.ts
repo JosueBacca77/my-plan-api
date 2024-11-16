@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document } from 'mongoose';
 
 // ClientModel Interface
 export interface IClient extends Document {
@@ -29,7 +29,18 @@ export interface ITrainer extends Document {
   };
 }
 
-export type INewRoleUser = IClient | ITrainer;
+// TrainerModel Interface
+export interface IAdmin {
+  user: {
+    id: string;
+    name: string;
+    lastName: string;
+    email: string;
+    photo?: string;
+  };
+}
+
+export type INewRoleUser = IClient | ITrainer | IAdmin;
 
 // Abstract factory interface
 export interface IUserFactory {

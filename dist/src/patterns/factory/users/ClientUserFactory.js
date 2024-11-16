@@ -20,7 +20,7 @@ const User_1 = require("./User");
 class ClientUserFactory {
     createUser(profileInfo) {
         return __awaiter(this, void 0, void 0, function* () {
-            const role = user_model_1.CLIENT;
+            const role = user_model_1.Role.CLIENT;
             const permissions = [];
             const userFactory = new User_1.UserFactory(role, profileInfo, permissions);
             const user = yield userFactory.createUser();

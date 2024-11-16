@@ -12,29 +12,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ADMIN = exports.TRAINER = exports.CLIENT = void 0;
+exports.Role = void 0;
 const mongoose_1 = require("mongoose");
 const regex_1 = require("../utils/regex");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-exports.CLIENT = "client";
-exports.TRAINER = "trainer";
-exports.ADMIN = "admin";
+var Role;
+(function (Role) {
+    Role["CLIENT"] = "CLIENT";
+    Role["TRAINER"] = "TRAINER";
+    Role["ADMIN"] = "ADMIN";
+})(Role || (exports.Role = Role = {}));
 const userSchema = new mongoose_1.Schema({
     name: {
         type: String,
-        required: [true, "Name is required"],
+        required: [true, 'Name is required'],
     },
     lastName: {
         type: String,
-        required: [true, "Last Name is required"],
+        required: [true, 'Last Name is required'],
     },
     email: {
         type: String,
-        required: [true, "Email is required"],
+        required: [true, 'Email is required'],
     },
     role: {
         type: String,
-        required: [true, "Role is required"],
+        enum: Object.values(Role), // Solo acepta los valores del enum
+        required: [true, 'Role is required'],
     },
     photo: {
         type: String,
@@ -42,14 +46,12 @@ const userSchema = new mongoose_1.Schema({
     },
     password: {
         type: String,
-        required: [true, "Password is required"],
+        required: [true, 'Password is required'],
         validate: {
             validator: function () {
-                console.log("A VER", this.password);
-                console.log("VALOR", regex_1.passwordRegex.test(this.password));
                 return regex_1.passwordRegex.test(this.password);
             },
-            message: "Password must include at least one special character, one lowercase letter, one uppercase letter, and be between 8 and 15 characters long",
+            message: 'Password must include at least one special character, one lowercase letter, one uppercase letter, and be between 8 and 15 characters long',
         },
         select: false,
     },
@@ -61,12 +63,12 @@ const userSchema = new mongoose_1.Schema({
     passwordResetToken: String,
     passwordResetExpires: Date,
 });
-userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         //Hash the password with cost of 12
         this.password = yield bcryptjs_1.default.hash(this.password, 12);
         next();
     });
 });
-const User = (0, mongoose_1.model)("User", userSchema);
+const User = (0, mongoose_1.model)('User', userSchema);
 exports.default = User;

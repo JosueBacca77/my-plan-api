@@ -8,34 +8,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TrainerUserFactory = void 0;
-const trainer_model_1 = __importDefault(require("../../../models/trainer.model"));
+exports.AdminUserFactory = void 0;
 const user_model_1 = require("../../../models/user.model.");
 const User_1 = require("./User");
 // Concrete factory for creating admin users
-class TrainerUserFactory {
+class AdminUserFactory {
     createUser(profileInfo) {
         return __awaiter(this, void 0, void 0, function* () {
-            const role = user_model_1.Role.TRAINER;
+            const role = user_model_1.Role.ADMIN;
             const permissions = [];
             const userFactory = new User_1.UserFactory(role, profileInfo, permissions);
             const user = yield userFactory.createUser();
-            const trainer = yield trainer_model_1.default.create({
-                birthDate: profileInfo.birthDate,
+            const admin = {
                 user: {
                     id: user.id,
                     name: user.name,
                     lastName: user.lastName,
                     email: user.email,
-                    role,
                 },
-            });
-            return trainer;
+            };
+            return admin;
         });
     }
 }
-exports.TrainerUserFactory = TrainerUserFactory;
+exports.AdminUserFactory = AdminUserFactory;

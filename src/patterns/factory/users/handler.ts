@@ -1,20 +1,22 @@
+import {
+  newClientSchema,
+  newTrainerSchema,
+} from '../../../controllers/schemas/newUser.schema';
+import { Role } from '../../../models/user.model.';
+import { ClientUserFactory } from './ClientUserFactory';
+import { TrainerUserFactory } from './TrainerUserFactory';
 
-import { newClientSchema, newTrainerSchema } from "../../../controllers/schemas/newUser.schema";
-import { CLIENT, Role, TRAINER } from "../../../models/user.model.";
-import { ClientUserFactory } from "./ClientUserFactory";
-import { TrainerUserFactory } from "./TrainerUserFactory";
-
-export type RolUserFactory = ClientUserFactory | TrainerUserFactory
+export type RolUserFactory = ClientUserFactory | TrainerUserFactory;
 
 export const getUserFactory = (role: Role): RolUserFactory => {
   switch (role) {
-    case CLIENT:
+    case Role.CLIENT:
       return new ClientUserFactory();
 
     // case ADMIN:
     //   return new AdminUserFactory();
 
-    case TRAINER:
+    case Role.TRAINER:
       return new TrainerUserFactory();
 
     default:
@@ -24,10 +26,10 @@ export const getUserFactory = (role: Role): RolUserFactory => {
 
 export const getValidationSchema = (role: Role) => {
   switch (role) {
-    case CLIENT:
+    case Role.CLIENT:
       return newClientSchema;
 
-    case TRAINER:
+    case Role.TRAINER:
       return newTrainerSchema;
 
     default:

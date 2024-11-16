@@ -8,18 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreatePlanContext = void 0;
-class CreatePlanContext {
-    setStrategy(strategy) {
-        this.strategy = strategy;
-    }
-    createPlan(newPlan, user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!this.strategy)
-                throw new Error('Creation plan stratgy not set');
-            return this.strategy.createPlan(newPlan, user);
-        });
-    }
-}
-exports.CreatePlanContext = CreatePlanContext;
+exports.createAdmin = void 0;
+const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
+const admin_service_1 = require("../services/admin.service");
+exports.createAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const body = req.body;
+    const response = yield (0, admin_service_1.createAdminService)(body);
+    res.status(response.statusCode).json(response);
+}));

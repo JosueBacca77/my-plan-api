@@ -34,7 +34,8 @@ const signToken = (id) => {
 const generateUserToken = (user) => {
     const token = signToken(user._id);
     const cookieOptions = {
-        expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000),
+        expires: new Date(Date.now() +
+            parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000),
         httpOnly: true,
         //req.secure ins an express variable
         //we can access to this because of app.set("trust proxy", 1);
@@ -43,19 +44,19 @@ const generateUserToken = (user) => {
     //ADDITIONAL CONSIDERATION: If you're using a load balancer or reverse proxy, ensure it's configured to pass the secure flag correctly.
     const resp = {
         token,
-        cookieOptions
+        cookieOptions,
     };
     return resp;
 };
 const signUpService = (body) => __awaiter(void 0, void 0, void 0, function* () {
     const hashedToken = crypto_1.default
-        .createHash("sha256")
+        .createHash('sha256')
         .update(body.token)
-        .digest("hex");
+        .digest('hex');
     const invitation = yield invitation_model_1.Invitation.findOne({ token: hashedToken });
     if (!invitation) {
         const response = {
-            status: "error",
+            status: 'error',
             statusCode: 401,
             message: `User hasn't been invited`,
             data: null,
@@ -64,7 +65,7 @@ const signUpService = (body) => __awaiter(void 0, void 0, void 0, function* () {
     }
     if (invitation.isUsed) {
         const response = {
-            status: "error",
+            status: 'error',
             statusCode: 401,
             message: `Invitation has already been used and user created successfully`,
             data: null,
@@ -74,7 +75,7 @@ const signUpService = (body) => __awaiter(void 0, void 0, void 0, function* () {
     //Check invitation is not expired
     if (invitation.tokenExpires < new Date()) {
         const response = {
-            status: "error",
+            status: 'error',
             statusCode: 401,
             message: `Invitation for ${invitation.email} has expired`,
             data: {
@@ -83,12 +84,12 @@ const signUpService = (body) => __awaiter(void 0, void 0, void 0, function* () {
         };
         return response;
     }
-    let validationSchema = (0, handler_1.getValidationSchema)(invitation.role);
+    const validationSchema = (0, handler_1.getValidationSchema)(invitation.role);
     if (!validationSchema) {
         const response = {
-            status: "error",
+            status: 'error',
             statusCode: 400,
-            message: "Invalid role",
+            message: 'Invalid role',
             data: null,
         };
         return response;
@@ -98,9 +99,9 @@ const signUpService = (body) => __awaiter(void 0, void 0, void 0, function* () {
         const { error } = validationSchema.validate(newUserData);
         if (error) {
             const response = {
-                status: "error",
+                status: 'error',
                 statusCode: 400,
-                message: "Validation error",
+                message: 'Validation error',
                 data: error.details,
             };
             return response;
@@ -108,9 +109,9 @@ const signUpService = (body) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (validationError) {
         const response = {
-            status: "error",
+            status: 'error',
             statusCode: 400,
-            message: "Validation failed",
+            message: 'Validation failed',
             data: validationError,
         };
         return response;
@@ -121,9 +122,9 @@ const signUpService = (body) => __awaiter(void 0, void 0, void 0, function* () {
     invitation.isUsed = true;
     yield invitation.save();
     const response = {
-        status: "success",
+        status: 'success',
         statusCode: 200,
-        message: "User registered successfully",
+        message: 'User registered successfully',
         data: newUser,
     };
     return response;
@@ -135,29 +136,29 @@ const logInService = (email, password) => __awaiter(void 0, void 0, void 0, func
     if (!validPassword) {
         const res = {
             user: null,
-            generatedToken: null
+            generatedToken: null,
         };
         return res;
     }
-    ;
     const tokenData = generateUserToken(user);
     const resp = {
         generatedToken: tokenData,
-        user
+        user,
     };
     return resp;
 });
 exports.logInService = logInService;
 const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let token = null;
-    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        token = req.headers.authorization.split(" ")[1];
+    if (req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')) {
+        token = req.headers.authorization.split(' ')[1];
     }
     else if (req.cookies.jwt) {
         token = req.cookies.jwt;
     }
     if (!token) {
-        return next(new appError_1.default("You are not logged in! Please log in to get access", 401));
+        return next(new appError_1.default('You are not logged in! Please log in to get access', 401));
     }
     try {
         // Crear una promesa para jwt.verify
@@ -174,7 +175,7 @@ const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         // Buscar usuario por ID
         const freshUser = yield user_model_1.default.findById(decoded.id).lean();
         if (!freshUser) {
-            return next(new appError_1.default("The user belonging to this token does no longer exist", 401));
+            return next(new appError_1.default('The user belonging to this token does no longer exist', 401));
         }
         // if (freshUser.changedPasswordAfter(decoded.iat)) {
         //   return next(new AppError("User recently changed password! Please log in again", 401));
@@ -184,7 +185,7 @@ const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         next();
     }
     catch (error) {
-        return next(new appError_1.default("You are not logged in! Please log in to get access", 401));
+        return next(new appError_1.default('You are not logged in! Please log in to get access', 401));
     }
 });
 exports.protect = protect;

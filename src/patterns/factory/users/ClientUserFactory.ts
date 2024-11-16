@@ -1,12 +1,12 @@
-import Client from "../../../models/client.model.";
-import { CLIENT } from "../../../models/user.model.";
-import { UserFactory } from "./User";
-import { INewRoleUser, IUserFactory } from "./UserFactory";
+import Client from '../../../models/client.model.';
+import { Role } from '../../../models/user.model.';
+import { UserFactory } from './User';
+import { INewRoleUser, IUserFactory } from './UserFactory';
 
 // Concrete factory for creating client users
 export class ClientUserFactory implements IUserFactory {
   async createUser(profileInfo: Record<string, any>): Promise<INewRoleUser> {
-    const role = CLIENT;
+    const role = Role.CLIENT;
     const permissions = [];
 
     const userFactory = new UserFactory(role, profileInfo, permissions);

@@ -1,12 +1,12 @@
-import { Schema, model, Document } from "mongoose";
-import { passwordRegex } from "../utils/regex";
-import bcrypt from "bcryptjs";
+import { Schema, model, Document } from 'mongoose';
+import { passwordRegex } from '../utils/regex';
+import bcrypt from 'bcryptjs';
 
-export const CLIENT = "client";
-export const TRAINER = "trainer";
-export const ADMIN = "admin";
-
-export type Role = Document & (typeof CLIENT | typeof TRAINER | typeof ADMIN);
+export enum Role {
+  CLIENT = 'CLIENT',
+  TRAINER = 'TRAINER',
+  ADMIN = 'ADMIN',
+}
 
 export interface UserModel extends Document {
   name: string;
@@ -15,7 +15,7 @@ export interface UserModel extends Document {
   photo: string;
   password: string;
   active: boolean;
-  role: Role;
+  role: string;
   passwordChangedAt: Date;
   passwordResetToken: String;
   passwordResetExpires: Date;
@@ -24,19 +24,20 @@ export interface UserModel extends Document {
 const userSchema = new Schema<UserModel>({
   name: {
     type: String,
-    required: [true, "Name is required"],
+    required: [true, 'Name is required'],
   },
   lastName: {
     type: String,
-    required: [true, "Last Name is required"],
+    required: [true, 'Last Name is required'],
   },
   email: {
     type: String,
-    required: [true, "Email is required"],
+    required: [true, 'Email is required'],
   },
   role: {
     type: String,
-    required: [true, "Role is required"],
+    enum: Object.values(Role), // Solo acepta los valores del enum
+    required: [true, 'Role is required'],
   },
   photo: {
     type: String,
@@ -44,15 +45,13 @@ const userSchema = new Schema<UserModel>({
   },
   password: {
     type: String,
-    required: [true, "Password is required"],
+    required: [true, 'Password is required'],
     validate: {
       validator: function (this: UserModel) {
-        console.log("A VER", this.password);
-        console.log("VALOR", passwordRegex.test(this.password));
         return passwordRegex.test(this.password);
       },
       message:
-        "Password must include at least one special character, one lowercase letter, one uppercase letter, and be between 8 and 15 characters long",
+        'Password must include at least one special character, one lowercase letter, one uppercase letter, and be between 8 and 15 characters long',
     },
     select: false,
   },
@@ -65,13 +64,13 @@ const userSchema = new Schema<UserModel>({
   passwordResetExpires: Date,
 });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   //Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
 
   next();
 });
 
-const User = model<UserModel>("User", userSchema);
+const User = model<UserModel>('User', userSchema);
 
 export default User;

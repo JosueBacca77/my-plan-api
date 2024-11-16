@@ -9,17 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreatePlanContext = void 0;
-class CreatePlanContext {
-    setStrategy(strategy) {
-        this.strategy = strategy;
-    }
-    createPlan(newPlan, user) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!this.strategy)
-                throw new Error('Creation plan stratgy not set');
-            return this.strategy.createPlan(newPlan, user);
-        });
-    }
-}
-exports.CreatePlanContext = CreatePlanContext;
+exports.createAdminService = void 0;
+const user_model_1 = require("../models/user.model.");
+const handler_1 = require("../patterns/factory/users/handler");
+const createAdminService = (body) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = body;
+    const factory = (0, handler_1.getUserFactory)(user_model_1.Role.ADMIN);
+    const newAdminUser = yield factory.createUser({
+        email,
+        password,
+    });
+    const response = {
+        status: 'success',
+        statusCode: 200,
+        message: `Admin user was created successfully`,
+        data: newAdminUser,
+    };
+    return response;
+});
+exports.createAdminService = createAdminService;

@@ -1,11 +1,11 @@
-import { Schema, model, Document } from "mongoose";
-import { Role } from "./user.model.";
+import { Schema, model, Document } from 'mongoose';
+import { Role } from './user.model.';
 
 interface InvitationModel extends Document {
   token: string;
   email?: string;
   phone?: string;
-  role: Role;
+  role: Role; // Role se mantiene como el tipo en TypeScript
   name: string;
   lastName: string;
   createdAt: Date;
@@ -16,14 +16,23 @@ interface InvitationModel extends Document {
 const invitationSchema = new Schema<InvitationModel>({
   token: {
     type: String,
-    required: [true, "Token is required"],
+    required: [true, 'Token is required'],
     select: false,
   },
   email: String,
   phone: String,
   role: {
     type: String,
-    required: [true, "role is required"],
+    required: [true, 'Role is required'],
+    enum: Object.values(Role), // Aquí defines los valores permitidos a partir del enum
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,
@@ -31,7 +40,7 @@ const invitationSchema = new Schema<InvitationModel>({
   },
   tokenExpires: {
     type: Date,
-    default: Date.now() + 30 * 60 * 1000,
+    default: () => Date.now() + 30 * 60 * 1000,
   },
   isUsed: {
     type: Boolean,
@@ -40,6 +49,6 @@ const invitationSchema = new Schema<InvitationModel>({
 });
 
 export const Invitation = model<InvitationModel>(
-  "Invitation",
+  'Invitation',
   invitationSchema
 );

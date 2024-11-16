@@ -7,11 +7,11 @@ const ClientUserFactory_1 = require("./ClientUserFactory");
 const TrainerUserFactory_1 = require("./TrainerUserFactory");
 const getUserFactory = (role) => {
     switch (role) {
-        case user_model_1.CLIENT:
+        case user_model_1.Role.CLIENT:
             return new ClientUserFactory_1.ClientUserFactory();
         // case ADMIN:
         //   return new AdminUserFactory();
-        case user_model_1.TRAINER:
+        case user_model_1.Role.TRAINER:
             return new TrainerUserFactory_1.TrainerUserFactory();
         default:
             return new ClientUserFactory_1.ClientUserFactory();
@@ -20,9 +20,9 @@ const getUserFactory = (role) => {
 exports.getUserFactory = getUserFactory;
 const getValidationSchema = (role) => {
     switch (role) {
-        case user_model_1.CLIENT:
+        case user_model_1.Role.CLIENT:
             return newUser_schema_1.newClientSchema;
-        case user_model_1.TRAINER:
+        case user_model_1.Role.TRAINER:
             return newUser_schema_1.newTrainerSchema;
         default:
             return null;

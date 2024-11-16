@@ -14,37 +14,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createPlanController = void 0;
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
-const user_model_1 = require("../models/user.model.");
 const plans_service_1 = require("../services/plans.service");
 const client_model_1 = __importDefault(require("../models/client.model."));
+const user_model_1 = require("../models/user.model.");
 exports.createPlanController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const plan = req.body;
     const user = req.user;
-    if (user.role !== user_model_1.TRAINER) {
+    if (user.role !== user_model_1.Role.TRAINER) {
         const response = {
-            status: "error",
+            status: 'error',
             statusCode: 403,
             message: `Plans can only be created by a trainer user`,
-            data: null
+            data: null,
         };
         res.status(response.statusCode).json(response);
     }
     //Validate client
     if (!(yield client_model_1.default.find({ id: plan.client }))) {
         const response = {
-            status: "error",
+            status: 'error',
             statusCode: 400,
             message: `Client with id ${plan.client} doesn't exists`,
-            data: null
+            data: null,
         };
         return response;
     }
     const createdPlan = yield (0, plans_service_1.createPlan)(user, plan);
     const response = {
-        status: "success",
+        status: 'success',
         statusCode: 201,
         message: `Plan created successfully`,
-        data: createdPlan
+        data: createdPlan,
     };
     res.status(response.statusCode).json(response);
 }));
