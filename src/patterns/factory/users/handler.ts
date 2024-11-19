@@ -3,6 +3,7 @@ import {
   newTrainerSchema,
 } from '../../../controllers/schemas/newUser.schema';
 import { Role } from '../../../models/user.model.';
+import { AdminUserFactory } from './AdminUserFactory';
 import { ClientUserFactory } from './ClientUserFactory';
 import { TrainerUserFactory } from './TrainerUserFactory';
 
@@ -13,8 +14,8 @@ export const getUserFactory = (role: Role): RolUserFactory => {
     case Role.CLIENT:
       return new ClientUserFactory();
 
-    // case ADMIN:
-    //   return new AdminUserFactory();
+    case Role.ADMIN:
+      return new AdminUserFactory();
 
     case Role.TRAINER:
       return new TrainerUserFactory();

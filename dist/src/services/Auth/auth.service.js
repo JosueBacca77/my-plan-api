@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.protect = exports.logInService = exports.signUpService = void 0;
+exports.protect = exports.changedPasswordAfter = exports.logInService = exports.signUpService = void 0;
 const crypto_1 = __importDefault(require("crypto"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -36,10 +36,10 @@ const generateUserToken = (user) => {
     const cookieOptions = {
         expires: new Date(Date.now() +
             parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000),
-        httpOnly: true,
+        httpOnly: true, //no será accesible desde JavaScript, mitigando ataques XSS
         //req.secure ins an express variable
         //we can access to this because of app.set("trust proxy", 1);
-        // secure: true // This is essential for HTTPS
+        // secure: true // It will only be sent in https requests
     };
     //ADDITIONAL CONSIDERATION: If you're using a load balancer or reverse proxy, ensure it's configured to pass the secure flag correctly.
     const resp = {
@@ -148,6 +148,17 @@ const logInService = (email, password) => __awaiter(void 0, void 0, void 0, func
     return resp;
 });
 exports.logInService = logInService;
+const changedPasswordAfter = function (JWTTimestamp, passwordChangedAt) {
+    //timestamp that indicates when the token was issued
+    //if the user hasn't changed their password (doesnt have passwordChangedAt), return false
+    if (passwordChangedAt) {
+        //user has change its password
+        const changedTimestamp = parseInt((passwordChangedAt.getTime() / 1000).toString(), 10);
+        return JWTTimestamp < changedTimestamp;
+    }
+    return false;
+};
+exports.changedPasswordAfter = changedPasswordAfter;
 const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let token = null;
     if (req.headers.authorization &&
@@ -177,9 +188,9 @@ const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         if (!freshUser) {
             return next(new appError_1.default('The user belonging to this token does no longer exist', 401));
         }
-        // if (freshUser.changedPasswordAfter(decoded.iat)) {
-        //   return next(new AppError("User recently changed password! Please log in again", 401));
-        // }
+        if ((0, exports.changedPasswordAfter)(decoded.iat, freshUser.passwordChangedAt)) {
+            return next(new appError_1.default('User recently changed password! Please log in again', 401));
+        }
         //Grant access to protected route
         req.user = freshUser;
         next();

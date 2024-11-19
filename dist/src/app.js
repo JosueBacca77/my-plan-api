@@ -23,6 +23,7 @@ const invitation_routes_1 = __importDefault(require("./routes/invitation.routes"
 const target_routes_1 = __importDefault(require("./routes/target.routes "));
 const plans__routes_1 = __importDefault(require("./routes/plans..routes"));
 const admin_routes_1 = __importDefault(require("./routes/admin.routes"));
+const auth_service_1 = require("./services/Auth/auth.service");
 exports.app = (0, express_1.default)();
 exports.app.use((0, cors_1.default)());
 exports.app.options('*', (0, cors_1.default)());
@@ -49,10 +50,11 @@ exports.app.use((0, xss_clean_1.default)());
 //Able x-www-form-urlencode form data to be parsed
 exports.app.use(express_1.default.urlencoded({ extended: true }));
 // app.enable('trust proxy');
+exports.app.use('/api/v1/admin', admin_routes_1.default);
+exports.app.use('/api/v1/users', users__routes_1.default);
+exports.app.use(auth_service_1.protect);
 exports.app.use('/api/v1/muscular-groups', muscularGroup_routes_1.default);
 exports.app.use('/api/v1/exercises', exercise__routes_1.default);
-exports.app.use('/api/v1/users', users__routes_1.default);
-exports.app.use('/api/v1/admin', admin_routes_1.default);
 exports.app.use('/api/v1/invitations', invitation_routes_1.default);
 exports.app.use('/api/v1/targets', target_routes_1.default);
 exports.app.use('/api/v1/plans', plans__routes_1.default);

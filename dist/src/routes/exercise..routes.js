@@ -9,11 +9,11 @@ const newExercise_schema_1 = require("../controllers/schemas/newExercise.schema"
 const exercise_controller_1 = require("../controllers/exercise.controller");
 const exercisesRoutes = express_1.default.Router();
 exercisesRoutes
-    .route("/")
+    .route('/')
     // .get(getAllexercises)
     .post((0, celebrate_1.celebrate)({ body: newExercise_schema_1.newExerciseSchema }), exercise_controller_1.postExercise);
 exercisesRoutes
-    .route("/:id")
+    .route('/:id')
     .get(exercise_controller_1.getExercise)
     .patch(exercise_controller_1.patchExercise)
     .delete(exercise_controller_1.deleteExercise);

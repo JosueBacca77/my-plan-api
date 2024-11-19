@@ -8,13 +8,15 @@ import { INewRoleUser } from '../patterns/factory/users/UserFactory';
 import { ResponseBody } from '../utils/http';
 
 export const createAdminService = async (body: RequestCreateAdminBody) => {
-  const { email, password } = body;
+  const { email, password, name, lastName } = body;
 
   const factory: RolUserFactory = getUserFactory(Role.ADMIN);
 
   const newAdminUser: INewRoleUser = await factory.createUser({
     email,
     password,
+    name,
+    lastName,
   });
 
   const response: ResponseBody = {
