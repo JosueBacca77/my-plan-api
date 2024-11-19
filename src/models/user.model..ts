@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Model } from 'mongoose';
 import { passwordRegex } from '../utils/regex';
 import bcrypt from 'bcryptjs';
 
@@ -71,6 +71,6 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-const User = model<UserModel>('User', userSchema);
+const User = model<UserModel, Model<UserModel>>('User', userSchema);
 
 export default User;

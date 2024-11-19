@@ -6,7 +6,8 @@ import { createAdmin } from '../controllers/admin.controller';
 
 const adminRoutes = express.Router();
 
-adminRoutes.route('/').post(() => console.log('LLEGA ENDPOINT'));
-// .post(checkAdminEndpoint, celebrate({ body: newAdminSchema }), createAdmin);
+adminRoutes
+  .route('/')
+  .post(checkAdminEndpoint, celebrate({ body: newAdminSchema }), createAdmin);
 
 export default adminRoutes;

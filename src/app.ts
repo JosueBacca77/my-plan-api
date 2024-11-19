@@ -18,6 +18,7 @@ import targetsRoutes from './routes/target.routes ';
 import { UserModel } from './models/user.model.';
 import plansRoutes from './routes/plans..routes';
 import adminRoutes from './routes/admin.routes';
+import { protect } from './services/Auth/auth.service';
 
 export const app = express();
 
@@ -66,10 +67,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // app.enable('trust proxy');
 
+app.use('/api/v1/admin', adminRoutes);
+app.use('/api/v1/users', usersRoutes);
+
+app.use(protect);
 app.use('/api/v1/muscular-groups', muscularGroupsRouter);
 app.use('/api/v1/exercises', exercisesRoutes);
-app.use('/api/v1/users', usersRoutes);
-app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/invitations', invitationsRoutes);
 app.use('/api/v1/targets', targetsRoutes);
 app.use('/api/v1/plans', plansRoutes);

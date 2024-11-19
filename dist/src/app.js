@@ -48,7 +48,7 @@ exports.app.use((0, xss_clean_1.default)());
 // );
 //Able x-www-form-urlencode form data to be parsed
 exports.app.use(express_1.default.urlencoded({ extended: true }));
-exports.app.enable('trust proxy');
+// app.enable('trust proxy');
 exports.app.use('/api/v1/muscular-groups', muscularGroup_routes_1.default);
 exports.app.use('/api/v1/exercises', exercise__routes_1.default);
 exports.app.use('/api/v1/users', users__routes_1.default);
