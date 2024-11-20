@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.protect = exports.changedPasswordAfter = exports.logInService = exports.signUpService = void 0;
+exports.protectAdmin = exports.protect = exports.changedPasswordAfter = exports.logInService = exports.signUpService = void 0;
 const crypto_1 = __importDefault(require("crypto"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -200,3 +200,10 @@ const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.protect = protect;
+const protectAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.user.role !== 'admin') {
+        return next(new appError_1.default('You do not have permission to perform this action', 403));
+    }
+    next();
+});
+exports.protectAdmin = protectAdmin;

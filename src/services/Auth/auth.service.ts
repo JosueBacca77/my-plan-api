@@ -6,7 +6,7 @@ import {
   RequestSignUpTrainerBody,
 } from '../../controllers/User/types';
 import { DecodedToken, GeneratedToken, LoginResponse } from './types';
-import User, { UserModel } from '../../models/user.model.';
+import User, { Role, UserModel } from '../../models/user.model.';
 import { Invitation } from '../../models/invitation.model';
 import { ResponseBody } from '../../utils/http';
 import {
@@ -254,4 +254,17 @@ export const protect = async (
       new AppError('You are not logged in! Please log in to get access', 401)
     );
   }
+};
+
+export const protectAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.user.role !== Role.ADMIN) {
+    return next(
+      new AppError('You do not have permission to perform this action', 403)
+    );
+  }
+  next();
 };

@@ -17,6 +17,11 @@ const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
 const admin_service_1 = require("../services/admin.service");
 exports.createAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
-    const response = yield (0, admin_service_1.createAdminService)(body);
+    const response = yield (0, admin_service_1.createAdminService)({
+        email: body.email,
+        password: body.password,
+        name: body.name,
+        lastName: body.lastName,
+    });
     res.status(response.statusCode).json(response);
 }));

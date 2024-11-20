@@ -13,11 +13,13 @@ exports.createAdminService = void 0;
 const user_model_1 = require("../models/user.model.");
 const handler_1 = require("../patterns/factory/users/handler");
 const createAdminService = (body) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password } = body;
+    const { email, password, name, lastName } = body;
     const factory = (0, handler_1.getUserFactory)(user_model_1.Role.ADMIN);
     const newAdminUser = yield factory.createUser({
         email,
         password,
+        name,
+        lastName,
     });
     const response = {
         status: 'success',
