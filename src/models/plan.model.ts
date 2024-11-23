@@ -83,6 +83,7 @@ export interface PlanModel {
   client: ClientInterface;
   target: TargetInterface;
   muscularGroups?: PlanMuscularGroupInterface[];
+  active?: boolean;
 }
 
 const muscularGroupSchema = new Schema<MuscularGroupInterface>({
@@ -194,6 +195,10 @@ const planSchema = new Schema<PlanModel>({
   ],
   client: {
     type: clientSchema,
+  },
+  active: {
+    type: Boolean,
+    default: false,
   },
   muscularGroups: {
     type: [planMuscularGroupSchema],

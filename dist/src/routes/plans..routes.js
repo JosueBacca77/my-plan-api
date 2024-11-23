@@ -4,8 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const auth_service_1 = require("../services/Auth/auth.service");
 const plan_controller_1 = require("../controllers/plan.controller");
+const auth_middlewares_1 = require("../middlewares/auth/auth.middlewares");
 const plansRoutes = express_1.default.Router();
-plansRoutes.route("/").post(auth_service_1.protect, plan_controller_1.createPlanController);
+plansRoutes.route('/').post(plan_controller_1.createPlanController);
+plansRoutes.route('/my-current').get(auth_middlewares_1.isClient, plan_controller_1.getMyCurrentPlanController);
+plansRoutes
+    .route('/my-current/:id')
+    .patch(auth_middlewares_1.isClient, plan_controller_1.setMyCurrentPlanController);
+// plansRoutes.route("/client").get(protect);
 exports.default = plansRoutes;

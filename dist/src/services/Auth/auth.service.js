@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -16,7 +39,7 @@ exports.protectAdmin = exports.protect = exports.changedPasswordAfter = exports.
 const crypto_1 = __importDefault(require("crypto"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const user_model_1 = __importDefault(require("../../models/user.model."));
+const user_model_1 = __importStar(require("../../models/user.model."));
 const invitation_model_1 = require("../../models/invitation.model");
 const handler_1 = require("../../patterns/factory/users/handler");
 const appError_1 = __importDefault(require("../../utils/appError"));
@@ -201,7 +224,7 @@ const protect = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.protect = protect;
 const protectAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== user_model_1.Role.ADMIN) {
         return next(new appError_1.default('You do not have permission to perform this action', 403));
     }
     next();

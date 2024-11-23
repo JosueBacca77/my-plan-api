@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPlanController = void 0;
+exports.setMyCurrentPlanController = exports.getMyCurrentPlanController = exports.createPlanController = void 0;
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
 const plans_service_1 = require("../services/plans.service");
 const client_model_1 = __importDefault(require("../models/client.model."));
@@ -46,5 +46,31 @@ exports.createPlanController = (0, catchAsync_1.default)((req, res) => __awaiter
         message: `Plan created successfully`,
         data: createdPlan,
     };
+    res.status(response.statusCode).json(response);
+}));
+exports.getMyCurrentPlanController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user;
+    const myCurrentPlan = yield (0, plans_service_1.getMyCurrentPlan)(user);
+    if (!myCurrentPlan) {
+        const response = {
+            status: 'error',
+            statusCode: 404,
+            message: `You haven't set a current plan`,
+            data: null,
+        };
+        res.status(response.statusCode).json(response);
+    }
+    const response = {
+        status: 'success',
+        statusCode: 200,
+        message: ``,
+        data: myCurrentPlan,
+    };
+    res.status(response.statusCode).json(response);
+}));
+exports.setMyCurrentPlanController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user;
+    const planId = req.params.id;
+    const response = yield (0, plans_service_1.setMyCurrentPlanService)(planId, user.id);
     res.status(response.statusCode).json(response);
 }));

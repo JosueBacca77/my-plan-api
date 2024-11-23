@@ -32,7 +32,7 @@ class MuscularGroupPlanStrategy {
                         description: exercise.description,
                         files: exercise.files,
                     } });
-                const foundPlanMuscularGroup = plansMuscularGroup.find(plan => plan.muscularGroup.id === exercise.muscularGroup);
+                const foundPlanMuscularGroup = plansMuscularGroup.find((plan) => plan.muscularGroup.id === exercise.muscularGroup);
                 if (foundPlanMuscularGroup) {
                     foundPlanMuscularGroup.exercises.push(planExercise);
                 }
@@ -44,7 +44,7 @@ class MuscularGroupPlanStrategy {
                             name: muscularGroup.name,
                             description: muscularGroup.description,
                         },
-                        exercises: [planExercise]
+                        exercises: [planExercise],
                     };
                     plansMuscularGroup.push(planMuscularGroup);
                 }
@@ -76,12 +76,11 @@ class MuscularGroupPlanStrategy {
                     email: user.email,
                     id: user._id,
                 },
-                muscularGroups: plansMuscularGroup
+                muscularGroups: plansMuscularGroup,
             };
             const planCreated = yield plan_model_1.Plan.create(planToCreate);
             return planCreated;
         });
     }
-    ;
 }
 exports.MuscularGroupPlanStrategy = MuscularGroupPlanStrategy;

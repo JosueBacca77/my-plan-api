@@ -18,12 +18,14 @@ const getInvitationService = () => __awaiter(void 0, void 0, void 0, function* (
 exports.getInvitationService = getInvitationService;
 const createInvitationService = (body) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, name, lastName, role, phone } = body;
-    const foundInvitation = yield invitation_model_1.Invitation.findOne({ email }).sort({ _id: -1 }).lean();
+    const foundInvitation = yield invitation_model_1.Invitation.findOne({ email })
+        .sort({ _id: -1 })
+        .lean();
     const expiredDate = foundInvitation === null || foundInvitation === void 0 ? void 0 : foundInvitation.tokenExpires;
     if (foundInvitation && expiredDate > new Date()) {
         //There is an invtation for this user that hasn't expired
         const response = {
-            status: "error",
+            status: 'error',
             statusCode: 409,
             message: `Invitation for ${email} already sent`,
             data: {
@@ -33,7 +35,6 @@ const createInvitationService = (body) => __awaiter(void 0, void 0, void 0, func
         return response;
     }
     const tokens = (0, tokens_1.generateToken)();
-    console.log("original token", tokens.token);
     const newInvitation = yield invitation_model_1.Invitation.create({
         name,
         lastName,
@@ -47,34 +48,34 @@ const createInvitationService = (body) => __awaiter(void 0, void 0, void 0, func
         emailService.sendInvitation({
             firstName: name,
             token: tokens.token,
-            to: email
+            to: email,
         });
     }
     catch (error) {
         const response = {
-            status: "success",
+            status: 'success',
             statusCode: 207,
             message: `Invitation to ${email} has been created successfully, but there was an error sending it`,
             data: {
-                status: "multi-status",
+                status: 'multi-status',
                 responses: [
                     {
                         statusCode: 201,
-                        status: "success",
+                        status: 'success',
                         message: `Invitation to ${email} has been created successfully.`,
                     },
                     {
                         statusCode: 500,
-                        status: "error",
+                        status: 'error',
                         message: `There was an error sending the invitation`,
                     },
-                ]
+                ],
             },
         };
         return response;
     }
     const response = {
-        status: "success",
+        status: 'success',
         statusCode: 200,
         message: `Invitation to ${email} has been sent successfully`,
         data: newInvitation,

@@ -114,6 +114,10 @@ const planSchema = new mongoose_1.Schema({
     client: {
         type: clientSchema,
     },
+    active: {
+        type: Boolean,
+        default: false,
+    },
     muscularGroups: {
         type: [planMuscularGroupSchema],
     },
