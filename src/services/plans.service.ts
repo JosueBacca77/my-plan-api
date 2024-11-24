@@ -4,6 +4,8 @@ import { MuscularGroupPlanStrategy } from '../patterns/strategy/plans/creation/M
 import { CreatePlanContext } from '../patterns/strategy/plans/creation/Plans';
 import { SpecificRoutinePlanStrategy } from '../patterns/strategy/plans/creation/SpecificRoutinePlanStrategy';
 import { NewPlan } from '../patterns/strategy/plans/creation/types';
+import { getClientCurrentPlanKey } from '../redis/helpers';
+import redisClient from '../redis/redis';
 import { ResponseBody } from '../utils/http';
 
 export const createPlan = async (
@@ -25,12 +27,24 @@ export const createPlan = async (
 };
 
 export const getMyCurrentPlan = async (
-  user: UserModel
+  userId: string
 ): Promise<PlanModel | null> => {
-  const plan: PlanModel = await Plan.findOne({
-    'client.id': user._id.toString(),
+  let plan: PlanModel | null = null;
+  const clientCurrentPlanKey = getClientCurrentPlanKey(userId);
+
+  const redisPlan = await redisClient.get(clientCurrentPlanKey);
+
+  if (redisPlan) {
+    plan = JSON.parse(redisPlan);
+    return plan;
+  }
+
+  plan = await Plan.findOne({
+    'client.id': userId,
     active: true,
   }).lean();
+
+  await redisClient.set(clientCurrentPlanKey, JSON.stringify(plan));
 
   return plan;
 };

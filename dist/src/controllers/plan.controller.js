@@ -71,6 +71,6 @@ exports.getMyCurrentPlanController = (0, catchAsync_1.default)((req, res) => __a
 exports.setMyCurrentPlanController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
     const planId = req.params.id;
-    const response = yield (0, plans_service_1.setMyCurrentPlanService)(planId, user.id);
+    const response = yield (0, plans_service_1.setMyCurrentPlanService)(planId, user._id);
     res.status(response.statusCode).json(response);
 }));

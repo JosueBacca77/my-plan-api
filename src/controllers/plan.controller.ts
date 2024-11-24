@@ -54,7 +54,9 @@ export const getMyCurrentPlanController = createAsync(
   async (req: Request, res: Response): Promise<any> => {
     const user = req.user;
 
-    const myCurrentPlan: PlanModel | null = await getMyCurrentPlan(user);
+    const myCurrentPlan: PlanModel | null = await getMyCurrentPlan(
+      user._id.toString()
+    );
 
     if (!myCurrentPlan) {
       const response: ResponseBody = {

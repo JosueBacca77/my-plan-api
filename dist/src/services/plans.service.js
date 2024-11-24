@@ -28,7 +28,7 @@ const createPlan = (user, plan) => __awaiter(void 0, void 0, void 0, function* (
 exports.createPlan = createPlan;
 const getMyCurrentPlan = (user) => __awaiter(void 0, void 0, void 0, function* () {
     const plan = yield plan_model_1.Plan.findOne({
-        client: user._id,
+        'client.id': user._id.toString(),
         active: true,
     }).lean();
     return plan;
@@ -45,7 +45,7 @@ const setMyCurrentPlanService = (planId, userId) => __awaiter(void 0, void 0, vo
         };
         return response;
     }
-    if (plan.client.id !== userId) {
+    if (plan.client.id !== userId.toString()) {
         const response = {
             status: 'error',
             statusCode: 403,
@@ -54,11 +54,20 @@ const setMyCurrentPlanService = (planId, userId) => __awaiter(void 0, void 0, vo
         };
         return response;
     }
+    const previousCurrentPlan = yield plan_model_1.Plan.findOne({
+        'client.id': userId.toString(),
+        _id: { $ne: planId },
+        active: true,
+    });
+    if (previousCurrentPlan) {
+        previousCurrentPlan.active = false;
+        yield previousCurrentPlan.save();
+    }
     if (plan.active) {
         const response = {
             status: 'success',
             statusCode: 200,
-            message: `Your plan is already the current one!`,
+            message: `The plan is already the current one!`,
             data: plan,
         };
         return response;
